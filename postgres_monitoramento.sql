@@ -1,0 +1,28 @@
+SHOW config_file;
+SHOW hba_file;
+
+REVOKE ALL ON DATABASE monitoramento FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+
+ALTER DATABASE monitoramento OWNER TO subscriber;
+GRANT CONNECT ON DATABASE monitoramento TO subscriber;
+
+\c monitoramento
+
+GRANT USAGE ON SCHEMA public TO subscriber;
+GRANT CREATE ON SCHEMA public TO subscriber;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO subscriber;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO subscriber;
+
+CREATE USER readonly WITH PASSWORD 'readonly';
+GRANT CONNECT ON DATABASE monitoramento TO readonly;
+
+GRANT USAGE ON SCHEMA public TO readonly;
+
+GRANT SELECT ON ALL TABLES    IN SCHEMA public TO readonly;
+GRANT SELECT ON ALL SEQUENCES IN SCHEMA public TO readonly;
+
+ALTER DEFAULT PRIVILEGES FOR ROLE subscriber IN SCHEMA public
+GRANT SELECT ON TABLES    TO readonly;
+ALTER DEFAULT PRIVILEGES FOR ROLE subscriber IN SCHEMA public
+GRANT SELECT ON SEQUENCES TO readonly;

@@ -1,0 +1,16 @@
+mosquitto_mysql
+.tags.vim
+tags
+.
+..
+*.crt
+*.csr
+*.key
+*.srl
+compile_commands.json
+.cache/
+publisher
+publisher_mqtt
+publisher_modbus
+subscriber/subscriber
+subscriber/bin

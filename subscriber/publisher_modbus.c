@@ -10,12 +10,11 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <time.h>
+#include <signal.h>
 #include <libgen.h>
 #include <unistd.h>
 
 #include "util.c"
-
-#define NTESTCLIENTS 5
 
 static sig_atomic_t run = true;
 
@@ -23,11 +22,10 @@ static void
 signal_handler(int32 unused) {
     (void)unused;
     run = false;
-    return;
 }
 
 static int32
-resolve(char *hostname, char *ip_adress, uint32 ip_adress_size) {
+resolve(char *hostname, char *ip_address, uint32 ip_address_size) {
     struct addrinfo addr_hints;
     struct addrinfo *addr_result;
     struct addrinfo *addr_iter;
@@ -35,11 +33,10 @@ resolve(char *hostname, char *ip_adress, uint32 ip_adress_size) {
 
     memset(&addr_hints, 0, sizeof(addr_hints));
     addr_hints.ai_family = AF_INET;
-    addr_hints.ai_socktype = SOCK_STREAM;  // any type is fine for name lookup
+    addr_hints.ai_socktype = SOCK_STREAM;
 
     if ((err = getaddrinfo(hostname, NULL, &addr_hints, &addr_result))) {
-        error("Error translating name '%s'"
-              " to IP address using getaddrinfo: %s.\n",
+        error("Error translating name '%s' to IP address using getaddrinfo: %s.\n",
               hostname, gai_strerror(err));
         return -1;
     }
@@ -61,7 +58,7 @@ resolve(char *hostname, char *ip_adress, uint32 ip_adress_size) {
             exit(EXIT_FAILURE);
         }
 
-        if (inet_ntop(addr_iter->ai_family, addr, ip_adress, ip_adress_size)) {
+        if (inet_ntop(addr_iter->ai_family, addr, ip_address, ip_address_size)) {
             freeaddrinfo(addr_result);
             return 0;
         } else {
@@ -75,21 +72,22 @@ resolve(char *hostname, char *ip_adress, uint32 ip_adress_size) {
 
 int32
 main(int32 argc, char *argv[]) {
-    char ip_adress[INET6_ADDRSTRLEN];
+    char ip_address[INET6_ADDRSTRLEN];
     char *BIODATA_HOST;
     modbus_t *modbus;
-    char plant_names[NTESTCLIENTS][34];
+
+    srand((unsigned int)time(NULL));
 
     (void)argc;
     program = basename(argv[0]);
 
     BIODATA_HOST = xgetenv("BIODATA_HOST");
-    if (resolve(BIODATA_HOST, ip_adress, sizeof(ip_adress)) < 0) {
+    if (resolve(BIODATA_HOST, ip_address, sizeof(ip_address)) < 0) {
         error("Error resolving hostname %s.\n", BIODATA_HOST);
         exit(EXIT_FAILURE);
     }
 
-    modbus = modbus_new_tcp(ip_adress, MODBUS_SERVER_PORT);
+    modbus = modbus_new_tcp(ip_address, MODBUS_SERVER_PORT);
     if (modbus == NULL) {
         error("Error in modbus_new_tcp: %s.\n", modbus_strerror(errno));
         exit(EXIT_FAILURE);
@@ -106,19 +104,13 @@ main(int32 argc, char *argv[]) {
         exit(EXIT_FAILURE);
     }
 
-    for (int32 i = 0; i < LENGTH(plant_names); i += 1) {
-        util_generate_plant_name(plant_names[i], sizeof(plant_names[i]));
-    }
-
     while (run) {
         static int32 nfailed = 0;
         Payload payload;
         struct timespec t0;
         struct timespec t1;
-        static int32 counter = 0;
         uint16 modbus_registers[MODBUS_NREGS];
         int32 n;
-        char *plant_name = plant_names[counter % (int32)LENGTH(plant_names)];
 
         if (clock_gettime(CLOCK_MONOTONIC, &t0) < 0) {
             error("Error getting time from CLOCK_MONOTONIC: %s.\n",
@@ -127,21 +119,29 @@ main(int32 argc, char *argv[]) {
         }
 
         memset(payload.plant_name, 0, sizeof(payload.plant_name));
-        memcpy(payload.plant_name, plant_name,
-               MIN(PLANT_NAME_MAX_LENGTH, strlen(plant_name) + 1));
-        payload.plant_name[PLANT_NAME_MAX_LENGTH - 1] = '\0';
+        strncpy(payload.plant_name, "caldeira", PLANT_NAME_MAX_LENGTH - 1);
+
         if ((payload.time = (int64)time(NULL)) < 0) {
             error("time() failed: %s\n", strerror(errno));
             exit(EXIT_FAILURE);
         }
 
-        memset(payload.data, 0x0C, sizeof(payload.data));
+        {
+            float temp  = 1200.0f + ((float)(rand() % 2001)) * 0.1f;
+            float press = -7.0f   + ((float)(rand() % 71))   * 0.1f;
+            float vazao = 10.0f   + ((float)(rand() % 21))   * 0.1f;
+            float pvap  = 10.0f   + ((float)(rand() % 21))   * 0.1f;
+
+            payload.data[0] = (int16)((temp  - 0.0f) * 10.0f);
+            payload.data[1] = (int16)((press - 1.0f) * 10.0f);
+            payload.data[2] = (int16)((vazao - 2.0f) * 10.0f);
+            payload.data[3] = (int16)((pvap  - 3.0f) * 10.0f);
+        }
 
         memcpy(&modbus_registers, &payload, sizeof(modbus_registers));
 
         if ((n = modbus_write_registers(modbus, MODBUS_START_ADDR, MODBUS_NREGS,
-                                        modbus_registers))
-            < 0) {
+                                        modbus_registers)) < 0) {
             error("Error in modbus_write_registers: %s.\n",
                   modbus_strerror(errno));
             if (errno == EPIPE) {
@@ -154,18 +154,18 @@ main(int32 argc, char *argv[]) {
             }
             continue;
         }
+
         if (nfailed > 0) {
             nfailed -= 1;
         }
+
         if (n != MODBUS_NREGS) {
-            error("Error: number of written registers is smaller than "
-                  "requested.\n");
+            error("Error: number of written registers is smaller than requested.\n");
             exit(EXIT_FAILURE);
         }
-        error("%s | %ld: %s = %d\n", program, payload.time, payload.plant_name,
-              payload.data[0]);
 
-        counter += 1;
+        error("%s | %ld: %s = %d\n",
+              program, payload.time, payload.plant_name, payload.data[0]);
 
         if (clock_gettime(CLOCK_MONOTONIC, &t1) < 0) {
             error("Error in clock_gettime(CLOCK_MONOTONIC): %s.\n",
@@ -174,17 +174,17 @@ main(int32 argc, char *argv[]) {
         }
 
         {
-            int64 elapsed_ns = (t1.tv_sec - t0.tv_sec)*1000000000L
-                               + (t1.tv_nsec - t0.tv_nsec);
-            int64 interval = (double)1e9 / (double)LENGTH(plant_names);
-
+            int64 elapsed_ns = (t1.tv_sec - t0.tv_sec) * 1000000000L
+                             + (t1.tv_nsec - t0.tv_nsec);
+            int64 interval = (int64)1e9;
             int64 remaining_ns = interval - elapsed_ns;
+
             if (remaining_ns > 0) {
                 struct timespec sleep_time;
                 sleep_time.tv_sec = remaining_ns / 1000000000L;
                 sleep_time.tv_nsec = remaining_ns % 1000000000L;
-                while (nanosleep(&sleep_time, &sleep_time) < 0)
-                    ;
+                while (nanosleep(&sleep_time, &sleep_time) < 0) {
+                }
             } else {
                 error("Load warning: publisher spent %.6f seconds on loop.\n",
                       (double)elapsed_ns / 1e9);
@@ -194,5 +194,5 @@ main(int32 argc, char *argv[]) {
 
     modbus_close(modbus);
     modbus_free(modbus);
-    exit(EXIT_SUCCESS);
+    return EXIT_SUCCESS;
 }

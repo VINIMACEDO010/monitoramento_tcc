@@ -48,48 +48,21 @@ typedef struct Regex {
     snprintf2(BUFFER, sizeof(BUFFER), FORMAT, __VA_ARGS__)
 #endif
 
+/* Sensores da caldeira:
+ *   temp_fornalha  : 1200 a 1400 graus C
+ *   press_fornalha : -7 a 0 mmca
+ *   vazao_caldeira : 10 a 12 t/h
+ *   press_vapor    : 10 a 12 bar
+ */
 static char *template[] = {
-    "PIT3101",
-    "LIT3101",
-    "PIT6101",
-    "FIT5101",
-    "PIT3101a",
-    "LIT3101a",
-    "PIT6101a",
-    "FIT5101a",
-    "PIT3101b",
-    "LIT3101b",
-    "PIT6101b",
-    "FIT5101b",
-    "PIT3101ax",
-    "LIT3101ax",
-    "PIT6101ax",
-    "FIT5101ax",
-    "PIT3101aa",
-    "LIT3101aa",
-    "PIT6101aa",
-    "FIT5101aa",
-    "PIT3101ab",
-    "LIT3101ab",
-    "PIT6101ab",
-    "FIT5101ab",
-    "PIT3101ca",
-    "LIT3101ca",
-    "PIT6101ca",
-    "FIT5101ca",
-    "PIT3101caa",
-    "LIT3101caa",
-    "PIT6101caa",
-    "FIT5101caa",
-    "PIT3101cab",
-    "LIT3101cab",
-    "PIT6101cab",
-    "FIT5101cab",
+    "temp_fornalha",
+    "press_fornalha",
+    "vazao_caldeira",
+    "press_vapor",
 };
 
 #define NPARAMS LENGTH(template) + 1
 
-#define MODBUS_SERVER_ADDR "testingbiodata.duckdns.org"
 #define MODBUS_SERVER_PORT 1502
 #define MODBUS_START_ADDR 0
 #define MODBUS_NREGS (int32)(sizeof(Payload)/sizeof(uint16))
@@ -101,8 +74,8 @@ typedef struct Payload {
     int64 time;
     int16 data[LENGTH(template)];
 } Payload;
-static const Payload dummy_payload = {0};
 
+static const Payload dummy_payload = {0};
 static char *program;
 
 #endif

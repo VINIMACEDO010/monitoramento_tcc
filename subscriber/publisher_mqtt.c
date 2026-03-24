@@ -1,6 +1,5 @@
 #include <errno.h>
 #include <mosquitto.h>
-#include <openssl/ssl.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
@@ -11,7 +10,6 @@
 #include "biodata.h"
 #include "util.c"
 
-#define NTESTCLIENTS 400
 #define MQTT_SYNCHRONOUS 0
 
 static bool mqtt_connacked = false;
@@ -22,7 +20,6 @@ static void
 signal_handler(int32 unused) {
     (void)unused;
     run = false;
-    return;
 }
 
 static void
@@ -38,7 +35,6 @@ publisher_connect_callback(struct mosquitto *mosquitto_client, void *obj,
 
     error("Got CONNACK from broker.\n");
     mqtt_connacked = true;
-    return;
 }
 
 static void
@@ -47,14 +43,14 @@ publisher_publish_callback(struct mosquitto *mosquitto_client, void *obj,
     Payload *payload = obj;
     (void)mosquitto_client;
     (void)message_id;
-    /* This callback means the following:
-     * QOS 0: Message was written to operating system
-     * QOS 1: Received PUBACK from broker
-     * QOS 2: Received PUBCOMP from the broker */
+
     mqtt_published = true;
-    error("QOS %d, %s | %ld: %s = %d\n", MQTT_PUBLISHER_QOS, program,
-          payload->time, payload->plant_name, payload->data[0]);
-    return;
+    error("QOS %d, %s | %ld: %s = %d\n",
+          MQTT_PUBLISHER_QOS,
+          program,
+          payload->time,
+          payload->plant_name,
+          payload->data[0]);
 }
 
 int32
@@ -67,7 +63,10 @@ main(int32 argc, char *argv[]) {
     char mosquitto_client_id[40] = {0};
     bool clean_session = true;
     char *BIODATA_HOST;
-    char plant_names[NTESTCLIENTS][34];
+    char *MQTT_PORT;
+    int32 mqtt_port;
+
+    srand((unsigned int)time(NULL));
 
     (void)argc;
     program = basename(argv[0]);
@@ -75,45 +74,25 @@ main(int32 argc, char *argv[]) {
     mosquitto_lib_init();
 
     SNPRINTF(mosquitto_client_id, "publisher_%d", getpid());
-    mosquitto_client
-        = mosquitto_new(mosquitto_client_id, clean_session, &payload);
+    mosquitto_client =
+        mosquitto_new(mosquitto_client_id, clean_session, &payload);
+
     if (mosquitto_client == NULL) {
         error("Error in mosquitto_new: %s.\n", strerror(errno));
         exit(EXIT_FAILURE);
     }
 
-    mosquitto_connect_callback_set(mosquitto_client,
-                                   publisher_connect_callback);
-    mosquitto_publish_callback_set(mosquitto_client,
-                                   publisher_publish_callback);
-
-    if (true) {
-        char *MQTT_CA_CERT = xgetenv("MQTT_CA_CERT");
-        char *MQTT_CLIENT_CERT = xgetenv("MQTT_CLIENT_CERT");
-        char *MQTT_CLIENT_KEY = xgetenv("MQTT_CLIENT_KEY");
-
-        if ((mosq_errno = mosquitto_tls_opts_set(
-                 mosquitto_client, SSL_VERIFY_NONE, "tlsv1.3", NULL))
-            != MOSQ_ERR_SUCCESS) {
-            error("Error setting tls options: %s.\n",
-                  mosquitto_strerror(mosq_errno));
-            exit(EXIT_FAILURE);
-        }
-        if ((mosq_errno
-             = mosquitto_tls_set(mosquitto_client, MQTT_CA_CERT, NULL,
-                                 MQTT_CLIENT_CERT, MQTT_CLIENT_KEY, NULL))
-            != MOSQ_ERR_SUCCESS) {
-            error("Error setting tls: %s\n", mosquitto_strerror(mosq_errno));
-            exit(EXIT_FAILURE);
-        }
-    }
+    mosquitto_connect_callback_set(mosquitto_client, publisher_connect_callback);
+    mosquitto_publish_callback_set(mosquitto_client, publisher_publish_callback);
 
     BIODATA_HOST = xgetenv("BIODATA_HOST");
-    mosq_errno = mosquitto_connect(mosquitto_client, BIODATA_HOST, 8883, 60);
+    MQTT_PORT = getenv("MQTT_PORT");
+    mqtt_port = MQTT_PORT ? atoi(MQTT_PORT) : 1883;
+
+    mosq_errno = mosquitto_connect(mosquitto_client, BIODATA_HOST, mqtt_port, 60);
     if (mosq_errno != MOSQ_ERR_SUCCESS) {
         mosquitto_destroy(mosquitto_client);
-        error("Error connecting to broker: %s\n",
-              mosquitto_strerror(mosq_errno));
+        error("Error connecting to broker: %s\n", mosquitto_strerror(mosq_errno));
         exit(EXIT_FAILURE);
     }
 
@@ -131,24 +110,19 @@ main(int32 argc, char *argv[]) {
         error("Waiting for CONNACK from broker...\n");
         timeout -= 1;
         if (timeout <= 0) {
-            error("Got no CONNACK from broker after %d seconds."
-                  "Exiting...\n",
+            error("Got no CONNACK from broker after %d seconds. Exiting...\n",
                   MQTT_CONNACK_TIMEOUT);
             exit(EXIT_FAILURE);
         }
+
         if (MQTT_SYNCHRONOUS) {
             int err;
             if ((err = mosquitto_loop(mosquitto_client, -1, 1)) < 0) {
-                error("Error in mosquitto_loop: %s.\n",
-                      mosquitto_strerror(err));
+                error("Error in mosquitto_loop: %s.\n", mosquitto_strerror(err));
             }
         } else {
             sleep(1);
         }
-    }
-
-    for (int32 i = 0; i < LENGTH(plant_names); i += 1) {
-        util_generate_plant_name(plant_names[i], sizeof(plant_names[i]));
     }
 
     signal(SIGINT, signal_handler);
@@ -161,7 +135,6 @@ main(int32 argc, char *argv[]) {
         struct timespec t1;
         struct timespec sleep_time;
         bool retain_message = false;
-        char *plant_name = plant_names[counter % (int32)LENGTH(plant_names)];
 
         if (clock_gettime(CLOCK_MONOTONIC, &t0) < 0) {
             error("Error getting time from CLOCK_MONOTONIC: %s.\n",
@@ -176,16 +149,32 @@ main(int32 argc, char *argv[]) {
             exit(EXIT_FAILURE);
         }
 
-        memcpy(&payload.plant_name, plant_name, PLANT_NAME_MAX_LENGTH);
-        payload.plant_name[PLANT_NAME_MAX_LENGTH - 1] = '\0';
+        memset(payload.plant_name, 0, sizeof(payload.plant_name));
+        strncpy(payload.plant_name, "caldeira", PLANT_NAME_MAX_LENGTH - 1);
         payload.time = (int64)t;
-        for (int32 i = 0; i < LENGTH(payload.data); i += 1) {
-            payload.data[i] = 123;
+
+        {
+            float temp  = 1200.0f + ((float)(rand() % 2001)) * 0.1f;
+            float press = -7.0f   + ((float)(rand() % 71))   * 0.1f;
+            float vazao = 10.0f   + ((float)(rand() % 21))   * 0.1f;
+            float pvap  = 10.0f   + ((float)(rand() % 21))   * 0.1f;
+
+            payload.data[0] = (int16)((temp  - 0.0f) * 10.0f);
+            payload.data[1] = (int16)((press - 1.0f) * 10.0f);
+            payload.data[2] = (int16)((vazao - 2.0f) * 10.0f);
+            payload.data[3] = (int16)((pvap  - 3.0f) * 10.0f);
         }
 
-        mosq_errno = mosquitto_publish(mosquitto_client, &counter,
-                                       "dummy_topic", sizeof(payload), &payload,
-                                       MQTT_PUBLISHER_QOS, retain_message);
+        mosq_errno = mosquitto_publish(
+            mosquitto_client,
+            &counter,
+            "caldeira/dados",
+            sizeof(payload),
+            &payload,
+            MQTT_PUBLISHER_QOS,
+            retain_message
+        );
+
         if (mosq_errno != MOSQ_ERR_SUCCESS) {
             error("Error publishing: %s\n", mosquitto_strerror(mosq_errno));
             exit(EXIT_FAILURE);
@@ -209,10 +198,9 @@ main(int32 argc, char *argv[]) {
         }
 
         {
-            int64 elapsed_ns = (t1.tv_sec - t0.tv_sec)*1000000000L
-                               + (t1.tv_nsec - t0.tv_nsec);
-            int64 interval = ((double)1e9 / (double)LENGTH(plant_names));
-
+            int64 elapsed_ns = (t1.tv_sec - t0.tv_sec) * 1000000000L
+                             + (t1.tv_nsec - t0.tv_nsec);
+            int64 interval = (int64)1e9;
             int64 remaining_ns = interval - elapsed_ns;
 
             if (remaining_ns > 0) {
@@ -226,6 +214,11 @@ main(int32 argc, char *argv[]) {
         }
     }
 
+    if (!MQTT_SYNCHRONOUS) {
+        mosquitto_loop_stop(mosquitto_client, true);
+    }
+
+    mosquitto_destroy(mosquitto_client);
     mosquitto_lib_cleanup();
-    exit(EXIT_SUCCESS);
+    return EXIT_SUCCESS;
 }

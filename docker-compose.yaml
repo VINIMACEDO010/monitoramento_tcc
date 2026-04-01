@@ -13,6 +13,20 @@ services:
     depends_on:
       - postgres
 
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana_tcc
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+    volumes:
+      - grafana-data:/var/lib/grafana
+
   mosquitto:
     image: eclipse-mosquitto:2.0
     container_name: mosquitto
@@ -87,3 +101,4 @@ services:
 
 volumes:
   postgres-data:
+  grafana-data:

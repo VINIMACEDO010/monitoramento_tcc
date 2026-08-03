@@ -1,0 +1,266 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": { "type": "grafana", "uid": "-- Grafana --" },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "id": null,
+  "links": [],
+  "liveNow": true,
+  "panels": [
+    {
+      "datasource": { "type": "grafana-postgresql-datasource", "uid": "caldeira-postgres" },
+      "fieldConfig": {
+        "defaults": { "color": { "mode": "fixed", "fixedColor": "#F2495C" }, "unit": "celsius" },
+        "overrides": []
+      },
+      "gridPos": { "h": 7, "w": 6, "x": 0, "y": 0 },
+      "id": 1,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": { "calcs": [ "lastNotNull" ], "fields": "", "values": false },
+        "textMode": "value"
+      },
+      "title": "Temperatura da fornalha",
+      "type": "stat",
+      "targets": [
+        {
+          "datasource": { "type": "grafana-postgresql-datasource", "uid": "caldeira-postgres" },
+          "editorMode": "code",
+          "format": "time_series",
+          "rawQuery": true,
+          "rawSql": "SELECT to_timestamp(time) AS \"time\", temp_fornalha AS \"Temperatura\" FROM caldeira WHERE $__unixEpochFilter(time) ORDER BY time",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "datasource": { "type": "grafana-postgresql-datasource", "uid": "caldeira-postgres" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "fixed", "fixedColor": "#F2495C" },
+          "custom": { "drawStyle": "line", "fillOpacity": 12, "lineWidth": 2, "showPoints": "never", "spanNulls": true },
+          "unit": "celsius"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 7, "w": 18, "x": 6, "y": 0 },
+      "id": 2,
+      "options": {
+        "legend": { "displayMode": "list", "placement": "bottom", "showLegend": false },
+        "tooltip": { "mode": "single", "sort": "none" }
+      },
+      "title": "Temperatura da Fornalha (°C) — histórico",
+      "type": "timeseries",
+      "targets": [
+        {
+          "datasource": { "type": "grafana-postgresql-datasource", "uid": "caldeira-postgres" },
+          "editorMode": "code",
+          "format": "time_series",
+          "rawQuery": true,
+          "rawSql": "SELECT to_timestamp(time) AS \"time\", temp_fornalha AS \"Temperatura da fornalha\" FROM caldeira WHERE $__unixEpochFilter(time) ORDER BY time",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "datasource": { "type": "grafana-postgresql-datasource", "uid": "caldeira-postgres" },
+      "fieldConfig": {
+        "defaults": { "color": { "mode": "fixed", "fixedColor": "#5794F2" }, "unit": "mmca" },
+        "overrides": []
+      },
+      "gridPos": { "h": 7, "w": 6, "x": 0, "y": 7 },
+      "id": 3,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": { "calcs": [ "lastNotNull" ], "fields": "", "values": false },
+        "textMode": "value"
+      },
+      "title": "Pressão da fornalha",
+      "type": "stat",
+      "targets": [
+        {
+          "datasource": { "type": "grafana-postgresql-datasource", "uid": "caldeira-postgres" },
+          "editorMode": "code",
+          "format": "time_series",
+          "rawQuery": true,
+          "rawSql": "SELECT to_timestamp(time) AS \"time\", press_fornalha AS \"Pressão da fornalha\" FROM caldeira WHERE $__unixEpochFilter(time) ORDER BY time",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "datasource": { "type": "grafana-postgresql-datasource", "uid": "caldeira-postgres" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "fixed", "fixedColor": "#5794F2" },
+          "custom": { "drawStyle": "line", "fillOpacity": 12, "lineWidth": 2, "showPoints": "never", "spanNulls": true },
+          "unit": "mmca"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 7, "w": 18, "x": 6, "y": 7 },
+      "id": 4,
+      "options": {
+        "legend": { "displayMode": "list", "placement": "bottom", "showLegend": false },
+        "tooltip": { "mode": "single", "sort": "none" }
+      },
+      "title": "Pressão da Fornalha (mmca) — histórico",
+      "type": "timeseries",
+      "targets": [
+        {
+          "datasource": { "type": "grafana-postgresql-datasource", "uid": "caldeira-postgres" },
+          "editorMode": "code",
+          "format": "time_series",
+          "rawQuery": true,
+          "rawSql": "SELECT to_timestamp(time) AS \"time\", press_fornalha AS \"Pressão da fornalha\" FROM caldeira WHERE $__unixEpochFilter(time) ORDER BY time",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "datasource": { "type": "grafana-postgresql-datasource", "uid": "caldeira-postgres" },
+      "fieldConfig": {
+        "defaults": { "color": { "mode": "fixed", "fixedColor": "#73BF69" }, "unit": "t/h" },
+        "overrides": []
+      },
+      "gridPos": { "h": 7, "w": 6, "x": 0, "y": 14 },
+      "id": 5,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": { "calcs": [ "lastNotNull" ], "fields": "", "values": false },
+        "textMode": "value"
+      },
+      "title": "Vazão da caldeira",
+      "type": "stat",
+      "targets": [
+        {
+          "datasource": { "type": "grafana-postgresql-datasource", "uid": "caldeira-postgres" },
+          "editorMode": "code",
+          "format": "time_series",
+          "rawQuery": true,
+          "rawSql": "SELECT to_timestamp(time) AS \"time\", vazao_caldeira AS \"Vazão\" FROM caldeira WHERE $__unixEpochFilter(time) ORDER BY time",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "datasource": { "type": "grafana-postgresql-datasource", "uid": "caldeira-postgres" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "fixed", "fixedColor": "#73BF69" },
+          "custom": { "drawStyle": "line", "fillOpacity": 12, "lineWidth": 2, "showPoints": "never", "spanNulls": true },
+          "unit": "t/h"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 7, "w": 18, "x": 6, "y": 14 },
+      "id": 6,
+      "options": {
+        "legend": { "displayMode": "list", "placement": "bottom", "showLegend": false },
+        "tooltip": { "mode": "single", "sort": "none" }
+      },
+      "title": "Vazão da Caldeira (t/h) — histórico",
+      "type": "timeseries",
+      "targets": [
+        {
+          "datasource": { "type": "grafana-postgresql-datasource", "uid": "caldeira-postgres" },
+          "editorMode": "code",
+          "format": "time_series",
+          "rawQuery": true,
+          "rawSql": "SELECT to_timestamp(time) AS \"time\", vazao_caldeira AS \"Vazão da caldeira\" FROM caldeira WHERE $__unixEpochFilter(time) ORDER BY time",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "datasource": { "type": "grafana-postgresql-datasource", "uid": "caldeira-postgres" },
+      "fieldConfig": {
+        "defaults": { "color": { "mode": "fixed", "fixedColor": "#B877D9" }, "unit": "bar" },
+        "overrides": []
+      },
+      "gridPos": { "h": 7, "w": 6, "x": 0, "y": 21 },
+      "id": 7,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": { "calcs": [ "lastNotNull" ], "fields": "", "values": false },
+        "textMode": "value"
+      },
+      "title": "Pressão do vapor",
+      "type": "stat",
+      "targets": [
+        {
+          "datasource": { "type": "grafana-postgresql-datasource", "uid": "caldeira-postgres" },
+          "editorMode": "code",
+          "format": "time_series",
+          "rawQuery": true,
+          "rawSql": "SELECT to_timestamp(time) AS \"time\", press_vapor AS \"Pressão do vapor\" FROM caldeira WHERE $__unixEpochFilter(time) ORDER BY time",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "datasource": { "type": "grafana-postgresql-datasource", "uid": "caldeira-postgres" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "fixed", "fixedColor": "#B877D9" },
+          "custom": { "drawStyle": "line", "fillOpacity": 12, "lineWidth": 2, "showPoints": "never", "spanNulls": true },
+          "unit": "bar"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 7, "w": 18, "x": 6, "y": 21 },
+      "id": 8,
+      "options": {
+        "legend": { "displayMode": "list", "placement": "bottom", "showLegend": false },
+        "tooltip": { "mode": "single", "sort": "none" }
+      },
+      "title": "Pressão do Vapor (bar) — histórico",
+      "type": "timeseries",
+      "targets": [
+        {
+          "datasource": { "type": "grafana-postgresql-datasource", "uid": "caldeira-postgres" },
+          "editorMode": "code",
+          "format": "time_series",
+          "rawQuery": true,
+          "rawSql": "SELECT to_timestamp(time) AS \"time\", press_vapor AS \"Pressão do vapor\" FROM caldeira WHERE $__unixEpochFilter(time) ORDER BY time",
+          "refId": "A"
+        }
+      ]
+    }
+  ],
+  "refresh": "5s",
+  "schemaVersion": 39,
+  "tags": ["tcc", "caldeira", "iot"],
+  "templating": { "list": [] },
+  "time": { "from": "now-1h", "to": "now" },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "Monitoramento de Caldeira — TCC",
+  "uid": "caldeira-tcc",
+  "version": 1,
+  "weekStart": ""
+}

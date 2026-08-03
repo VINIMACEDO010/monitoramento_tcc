@@ -1,4 +1,4 @@
-FROM docker.io/archlinux:latest
+FROM --platform=linux/amd64 docker.io/archlinux:latest
 
 RUN pacman -Syu --noconfirm \
     mosquitto \

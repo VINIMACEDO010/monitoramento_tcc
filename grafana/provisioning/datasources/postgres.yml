@@ -1,0 +1,17 @@
+apiVersion: 1
+
+datasources:
+  - name: PostgreSQL
+    uid: caldeira-postgres
+    type: grafana-postgresql-datasource
+    access: proxy
+    url: postgres:5432
+    user: readonly
+    isDefault: true
+    editable: true
+    jsonData:
+      database: monitoramento
+      sslmode: disable
+      postgresVersion: 1600
+    secureJsonData:
+      password: readonly

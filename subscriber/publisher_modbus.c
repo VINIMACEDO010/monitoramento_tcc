@@ -176,7 +176,7 @@ main(int32 argc, char *argv[]) {
         {
             int64 elapsed_ns = (t1.tv_sec - t0.tv_sec) * 1000000000L
                              + (t1.tv_nsec - t0.tv_nsec);
-            int64 interval = (int64)1e9;
+            int64 interval = (int64)SAMPLE_INTERVAL_SECONDS * 1000000000L;
             int64 remaining_ns = interval - elapsed_ns;
 
             if (remaining_ns > 0) {

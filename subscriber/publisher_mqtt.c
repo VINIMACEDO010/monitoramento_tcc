@@ -176,8 +176,9 @@ main(int32 argc, char *argv[]) {
         );
 
         if (mosq_errno != MOSQ_ERR_SUCCESS) {
+            /* Sem conexão com o broker: a biblioteca reconecta sozinha;
+             * esta leitura é perdida e o laço segue para a próxima. */
             error("Error publishing: %s\n", mosquitto_strerror(mosq_errno));
-            exit(EXIT_FAILURE);
         }
 
         if (MQTT_SYNCHRONOUS && (MQTT_PUBLISHER_QOS > 0)) {
@@ -200,7 +201,7 @@ main(int32 argc, char *argv[]) {
         {
             int64 elapsed_ns = (t1.tv_sec - t0.tv_sec) * 1000000000L
                              + (t1.tv_nsec - t0.tv_nsec);
-            int64 interval = (int64)1e9;
+            int64 interval = (int64)SAMPLE_INTERVAL_SECONDS * 1000000000L;
             int64 remaining_ns = interval - elapsed_ns;
 
             if (remaining_ns > 0) {

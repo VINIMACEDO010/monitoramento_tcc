@@ -41,10 +41,17 @@ sub_handle_signal(int32 number) {
 
 void
 sub_mqtt_connected(struct mosquitto *mosquitto, void *user_data, int32 result) {
-    (void)mosquitto;
     (void)user_data;
-    (void)result;
+    if (result != 0) {
+        error("Broker refused connection: %s.\n", mosquitto_connack_string(result));
+        return;
+    }
     error("Connected to mosquitto broker.\n");
+    /* Refaz a assinatura a cada conexão, inclusive depois de uma reconexão. */
+    if (mosquitto_subscribe(mosquitto, NULL, MQTT_SUBSCRIBER_TOPIC,
+                            MQTT_SUBSCRIBER_QOS) != MOSQ_ERR_SUCCESS) {
+        error("Error subscribing to topic \"%s\".\n", MQTT_SUBSCRIBER_TOPIC);
+    }
 }
 
 void
@@ -73,8 +80,8 @@ sub_pg_simple(PGconn *pg_connection, const char *command) {
     return status;
 }
 
-static void
-sub_payload_insert(PGconn *pg_connection, Payload *payload) {
+static bool
+sub_payload_insert_once(PGconn *pg_connection, Payload *payload) {
     char sql_query[2048] = {0};
     char sql_columns[512] = {0};
     char sql_values[512] = {0};
@@ -100,7 +107,7 @@ sub_payload_insert(PGconn *pg_connection, Payload *payload) {
 
     if (!REGEX_MATCH_SIMPLE(regex_table_name, payload->plant_name)) {
         error("Invalid plant name: %s\n", payload->plant_name);
-        return;
+        return false;
     }
 
     for (int64 i = 0; i < LENGTH(payload->data); i += 1) {
@@ -131,7 +138,7 @@ sub_payload_insert(PGconn *pg_connection, Payload *payload) {
 
     if (sub_pg_simple(pg_connection, sql_query) != PGRES_COMMAND_OK) {
         error("Error creating table.\n");
-        return;
+        return false;
     }
 
     if (n1 > 0) {
@@ -148,7 +155,7 @@ sub_payload_insert(PGconn *pg_connection, Payload *payload) {
 
         if (sub_pg_simple(pg_connection, sql_query) != PGRES_COMMAND_OK) {
             error("Error adding columns to table.\n");
-            return;
+            return false;
         }
     }
 
@@ -186,6 +193,37 @@ sub_payload_insert(PGconn *pg_connection, Payload *payload) {
         }
 
         PQclear(pg_result);
+        return status == PGRES_COMMAND_OK;
+    }
+}
+
+/* Garante que a conexão com o PostgreSQL está ativa, reconectando se preciso. */
+static bool
+sub_pg_ensure(PGconn *pg_connection) {
+    if (PQstatus(pg_connection) == CONNECTION_OK) {
+        return true;
+    }
+    error("Lost connection to postgres database. Reconnecting...\n");
+    PQreset(pg_connection);
+    if (PQstatus(pg_connection) != CONNECTION_OK) {
+        error("Reconnection to postgres failed: %s", PQerrorMessage(pg_connection));
+        return false;
+    }
+    error("Reconnected to postgres database.\n");
+    return true;
+}
+
+static void
+sub_payload_insert(PGconn *pg_connection, Payload *payload) {
+    if (!sub_pg_ensure(pg_connection)) {
+        error("Reading discarded: database unavailable.\n");
+        return;
+    }
+    /* Se a gravação falhar porque a conexão caiu, reconecta e tenta mais uma vez. */
+    if (!sub_payload_insert_once(pg_connection, payload)
+        && PQstatus(pg_connection) != CONNECTION_OK
+        && sub_pg_ensure(pg_connection)) {
+        sub_payload_insert_once(pg_connection, payload);
     }
 }
 
@@ -211,8 +249,9 @@ static void
 xmosquitto_reconnect(struct mosquitto *mosquitto) {
     int32 err;
     if ((err = mosquitto_reconnect(mosquitto)) != MOSQ_ERR_SUCCESS) {
-        error("Error reconnecting to broker: %s.\n", mosquitto_strerror(err));
-        exit(EXIT_FAILURE);
+        /* Broker indisponível: tenta de novo na próxima volta do laço. */
+        error("Error reconnecting to broker: %s. Retrying...\n", mosquitto_strerror(err));
+        sleep(1);
     }
 }
 
@@ -259,7 +298,7 @@ main(int32 argc, char *argv[]) {
     POSTGRES_PASSWORD = xgetenv("POSTGRES_PASSWORD");
 
     SNPRINTF(pg_config_string,
-             "host=%s port=%s user=%s password=%s dbname=%s",
+             "host=%s port=%s user=%s password=%s dbname=%s connect_timeout=3",
              POSTGRES_HOST,
              POSTGRES_PORT,
              POSTGRES_USER,

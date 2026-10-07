@@ -43,4 +43,7 @@ $CC $CPPFLAGS $CFLAGS -o "$program2" "$main2" $LDFLAGS_MOSQUITTO
 echo "Compilando publisher_modbus..."
 $CC $CPPFLAGS $CFLAGS -o "$program3" "$main3" $LDFLAGS_MODBUS
 
+echo "Compilando teste_envio..."
+$CC $CPPFLAGS $CFLAGS -o "$bin/teste_envio" "$src/teste_envio.c" $LDFLAGS_MOSQUITTO -lm
+
 echo "Build concluído."

@@ -23,6 +23,9 @@ typedef int64_t int64;
 #endif
 
 #define MQTT_CONNACK_TIMEOUT 5
+
+/* Intervalo entre duas leituras dos sensores simulados, em segundos. */
+#define SAMPLE_INTERVAL_SECONDS 5
 #define MQTT_PUBLISHER_QOS 1
 #define MQTT_SUBSCRIBER_TOPIC "#"
 #define MQTT_SUBSCRIBER_QOS 0

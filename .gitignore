@@ -14,3 +14,4 @@ publisher_mqtt
 publisher_modbus
 subscriber/subscriber
 subscriber/bin
+*.pem

@@ -54,8 +54,8 @@ typedef struct Regex {
 /* Sensores da caldeira:
  *   temp_fornalha  : 1200 a 1400 graus C
  *   press_fornalha : -7 a 0 mmca
- *   vazao_caldeira : 10 a 12 t/h
- *   press_vapor    : 10 a 12 bar
+ *   vazao_caldeira : 10 a 15 t/h
+ *   press_vapor    : 13 a 15 bar
  */
 static char *template[] = {
     "temp_fornalha",

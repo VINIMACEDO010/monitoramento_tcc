@@ -338,7 +338,7 @@
               },
               {
                 "color": "red",
-                "value": 12.05
+                "value": 15.05
               }
             ]
           },
@@ -418,7 +418,7 @@
               },
               {
                 "color": "red",
-                "value": 12.05
+                "value": 15.05
               }
             ]
           },
@@ -480,11 +480,11 @@
               },
               {
                 "color": "green",
-                "value": 9.95
+                "value": 12.95
               },
               {
                 "color": "red",
-                "value": 12.05
+                "value": 15.05
               }
             ]
           },
@@ -560,11 +560,11 @@
               },
               {
                 "color": "green",
-                "value": 9.95
+                "value": 12.95
               },
               {
                 "color": "red",
-                "value": 12.05
+                "value": 15.05
               }
             ]
           },

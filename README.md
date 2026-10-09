@@ -20,8 +20,8 @@ O sistema é organizado em quatro camadas:
 - Variáveis geradas:
   - Temperatura da fornalha (1200 a 1400 °C)
   - Pressão da fornalha (−7 a 0 mmca)
-  - Vazão da caldeira (10 a 12 t/h)
-  - Pressão do vapor (10 a 12 bar)
+  - Vazão da caldeira (10 a 15 t/h)
+  - Pressão do vapor (13 a 15 bar)
 
 ### 2. ⚙️ Processamento (subscriber)
 - Programa em C que recebe MQTT e Modbus TCP (porta 1502) no mesmo processo, com `poll()`

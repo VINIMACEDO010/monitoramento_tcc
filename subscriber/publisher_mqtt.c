@@ -156,8 +156,8 @@ main(int32 argc, char *argv[]) {
         {
             float temp  = 1200.0f + ((float)(rand() % 2001)) * 0.1f;
             float press = -7.0f   + ((float)(rand() % 71))   * 0.1f;
-            float vazao = 10.0f   + ((float)(rand() % 21))   * 0.1f;
-            float pvap  = 10.0f   + ((float)(rand() % 21))   * 0.1f;
+            float vazao = 10.0f   + ((float)(rand() % 51))   * 0.1f;
+            float pvap  = 13.0f   + ((float)(rand() % 21))   * 0.1f;
 
             payload.data[0] = (int16)((temp  - 0.0f) * 10.0f);
             payload.data[1] = (int16)((press - 1.0f) * 10.0f);

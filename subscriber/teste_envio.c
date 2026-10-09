@@ -13,7 +13,7 @@
  *   -t instante  instante da leitura em segundos Unix (padrão: agora)
  *   -n vezes     quantas vezes enviar a MESMA leitura (padrão: 1)
  *   -T -F -V -S  valores das variáveis (padrão: o meio de cada faixa,
- *                1300 °C, -3,5 mmca, 11 t/h e 11 bar)
+ *                1300 °C, -3,5 mmca, 12,5 t/h e 14 bar)
  *
  * Exemplos:
  *   teste_envio -T 1450                 (temperatura acima da faixa)
@@ -67,7 +67,7 @@ main(int32 argc, char *argv[]) {
     char *plant = "caldeira";
     int64 when = (int64)time(NULL);
     int32 times = 1;
-    float values[4] = {1300.0f, -3.5f, 11.0f, 11.0f};
+    float values[4] = {1300.0f, -3.5f, 12.5f, 14.0f};
     int32 opt;
     int32 err;
     char *host;

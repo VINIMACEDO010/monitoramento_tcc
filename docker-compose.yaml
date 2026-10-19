@@ -1,0 +1,108 @@
+services:
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin_tcc
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "8080:80"
+    depends_on:
+      - postgres
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana_tcc
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning
+      - ./grafana/dashboards:/var/lib/grafana/dashboards
+
+  mosquitto:
+    image: eclipse-mosquitto:2.0
+    container_name: mosquitto
+    restart: unless-stopped
+    ports:
+      - "1883:1883"
+    volumes:
+      - ./mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+
+  postgres:
+    image: postgres:16
+    container_name: postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: monitoramento
+      POSTGRES_USER: subscriber
+      POSTGRES_PASSWORD: subscriber
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./postgres_monitoramento.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U subscriber -d monitoramento"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  subscriber:
+    build: subscriber
+    container_name: subscriber
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      mosquitto:
+        condition: service_started
+    ports:
+      - "1502:1502"
+    environment:
+      MQTT_HOST: mosquitto
+      MQTT_PORT: 1883
+      MQTT_KEEPALIVE: 10
+      MQTT_USE_TLS: 0
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: monitoramento
+      POSTGRES_USER: subscriber
+      POSTGRES_PASSWORD: subscriber
+      PGSSLMODE: disable
+      PGPASSWORD: subscriber
+    command: /app/bin/subscriber
+
+  publisher-mqtt:
+    build: subscriber
+    container_name: publisher_mqtt_c
+    restart: unless-stopped
+    depends_on:
+      - mosquitto
+    environment:
+      - BIODATA_HOST=mosquitto
+      - MQTT_PORT=1883
+    command: /app/bin/publisher_mqtt
+
+  # O publicador Modbus só sobe quando pedido: docker compose --profile modbus up -d
+  publisher-modbus:
+    build: subscriber
+    container_name: publisher_modbus_c
+    profiles: ["modbus"]
+    restart: unless-stopped
+    depends_on:
+      - subscriber
+    environment:
+      - BIODATA_HOST=subscriber
+    command: /app/bin/publisher_modbus
+
+volumes:
+  postgres-data:
+  grafana-data:

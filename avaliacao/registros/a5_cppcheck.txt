@@ -1,0 +1,48 @@
+cppcheck Cppcheck 2.13.0
+util.c:25:9: portability: %lu in format string (no. 1) requires 'unsigned long' but the argument type is 'size_t {aka unsigned long}'. [invalidPrintfArgType_uint]
+        fprintf(stderr,
+        ^
+util.c:70:17: portability: Casting from double * to unsigned long * is not portable due to different binary data representations on different platforms. [invalidPointerCast]
+    uint64 *i = (uint64 *)&in;
+                ^
+util.c:71:17: portability: Casting from double * to unsigned int * is not portable due to different binary data representations on different platforms. [invalidPointerCast]
+    uint32 *r = (uint32 *)out;
+                ^
+subscriber.c:271:11: style: The scope of the variable 'MQTT_PORT' can be reduced. [variableScope]
+    char *MQTT_PORT;
+          ^
+subscriber.c:272:11: style: The scope of the variable 'MQTT_KEEPALIVE' can be reduced. [variableScope]
+    char *MQTT_KEEPALIVE;
+          ^
+subscriber.c:276:20: style: The scope of the variable 'sub_pw' can be reduced. [variableScope]
+    struct passwd *sub_pw;
+                   ^
+subscriber.c:271:11: style: Variable 'MQTT_PORT' can be declared as pointer to const [constVariablePointer]
+    char *MQTT_PORT;
+          ^
+subscriber.c:272:11: style: Variable 'MQTT_KEEPALIVE' can be declared as pointer to const [constVariablePointer]
+    char *MQTT_KEEPALIVE;
+          ^
+publisher_mqtt.c:66:11: style: Variable 'MQTT_PORT' can be declared as pointer to const [constVariablePointer]
+    char *MQTT_PORT;
+          ^
+util.c:69:0: style: The function 'network_double' is never used. [unusedFunction]
+network_double(double in, double *out) {
+^
+util.c:79:0: style: The function 'network_int64' is never used. [unusedFunction]
+network_int64(int64 in, int64 *out) {
+^
+util.c:89:0: style: The function 'util_4int16_int64' is never used. [unusedFunction]
+util_4int16_int64(const uint16 registers[4]) {
+^
+util.c:99:0: style: The function 'network_int16' is never used. [unusedFunction]
+network_int16(int16 in, int16 *out) {
+^
+util.c:107:0: style: The function 'network_float32' is never used. [unusedFunction]
+network_float32(float in, char out[4]) {
+^
+util.c:150:0: style: The function 'util_generate_plant_name' is never used. [unusedFunction]
+util_generate_plant_name(char *buffer, int64 size) {
+^
+nofile:0:0: information: Active checkers: 113/592 (use --checkers-report=<filename> to see details) [checkersReport]
+

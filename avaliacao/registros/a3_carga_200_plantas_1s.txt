@@ -1,0 +1,16 @@
+cenario s4: 200 plantas, intervalo 1000 ms, duracao 180 s, inicio 1792436643 (2026-10-19 19:04:03)
+enviadas=36000 confirmadas_pelo_broker=36000
+fim 1792436831
+ leituras_gravadas | plantas | atraso_medio_s | atraso_max_s | atraso_p95_s 
+-------------------+---------+----------------+--------------+--------------
+             36000 |     200 |          0.929 |        1.161 |        1.053
+(1 row)
+
+ min_por_planta | max_por_planta 
+----------------+----------------
+            180 |            180
+(1 row)
+
+recursos do subscriber (cpu% e memoria RSS em kB, a cada 10 s):
+  amostras=19 cpu_media=2.6% rss_inicial=10304 kB rss_max=10308 kB
+mensagens de erro no subscriber: 0

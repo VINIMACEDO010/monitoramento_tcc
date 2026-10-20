@@ -1,0 +1,25 @@
+== Cliente Modbus generico (pymodbus 3.16.1), leitura dos registradores 0 a 23 na porta 1502
+18:44:31 registradores lidos: planta=caldeira instante=1792435469 temp=1335.0 pfor=-4.8 vazao=13.8 pvap=13.4
+18:44:36 registradores lidos: planta=caldeira instante=1792435474 temp=1303.2 pfor=-4.3 vazao=12.8 pvap=13.3
+18:44:41 registradores lidos: planta=caldeira instante=1792435479 temp=1358.3 pfor=-7.0 vazao=12.6 pvap=13.5
+
+== Cliente SQL externo (psql 16.15), usuario readonly
+  instante  | temp_fornalha | press_fornalha | vazao_caldeira | press_vapor 
+------------+---------------+----------------+----------------+-------------
+ 1792435469 |          1335 |           -4.8 |           13.8 |        13.4
+ 1792435474 |        1303.2 |           -4.3 |           12.8 |        13.3
+ 1792435479 |        1358.3 |             -7 |           12.6 |        13.5
+(3 rows)
+
+== Log do publicador Modbus (mesmos instantes)
+publisher_modbus | 1792435469: caldeira = 13350
+publisher_modbus | 1792435474: caldeira = 13032
+publisher_modbus | 1792435479: caldeira = 13583
+
+== Cliente Modbus generico escrevendo uma leitura (como um CLP configurado como cliente)
+escrita de 24 registradores: ok | planta=caldeira_generico instante=1792435501 valores=[1288.8, -2.2, 11.1, 14.4]
+    time    | temp_fornalha | press_fornalha | vazao_caldeira | press_vapor 
+------------+---------------+----------------+----------------+-------------
+ 1792435501 |        1288.8 |           -2.2 |           11.1 |        14.4
+(1 row)
+

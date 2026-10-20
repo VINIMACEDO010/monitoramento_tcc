@@ -1,0 +1,16 @@
+cenario s2: 1 plantas, intervalo 500 ms, duracao 120 s, inicio 1792436167 (2026-10-19 18:56:07)
+enviadas=240 confirmadas_pelo_broker=240
+fim 1792436296
+ leituras_gravadas | plantas | atraso_medio_s | atraso_max_s | atraso_p95_s 
+-------------------+---------+----------------+--------------+--------------
+               120 |       1 |          0.014 |        0.017 |        0.016
+(1 row)
+
+ min_por_planta | max_por_planta 
+----------------+----------------
+            120 |            120
+(1 row)
+
+recursos do subscriber (cpu% e memoria RSS em kB, a cada 10 s):
+  amostras=13 cpu_media=0.0% rss_inicial=10248 kB rss_max=10252 kB
+mensagens de erro no subscriber: 0

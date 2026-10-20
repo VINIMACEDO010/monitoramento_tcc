@@ -1,0 +1,58 @@
+[2026-10-20 08:24:36] A1 ETAPA DEPOIS
+[2026-10-20 08:24:45] >> Subindo o ambiente
+docker :  Network monitoramento_tcc_default Creating 
+ Network monitoramento_tcc_default Created 
+ Container mosquitto Creating 
+ Container postgres Creating 
+ Container postgres Created 
+ Container grafana_tcc Creating 
+ Container pgadmin_tcc Creating 
+ Container mosquitto Created 
+ Container subscriber Creating 
+ Container publisher_mqtt_c Creating 
+ Container grafana_tcc Created 
+ Container subscriber Created 
+ Container publisher_mqtt_c Created 
+ Container pgadmin_tcc Created 
+ Container mosquitto Starting 
+ Container postgres Starting 
+ Container mosquitto Started 
+ Container publisher_mqtt_c Starting 
+ Container postgres Started 
+ Container grafana_tcc Starting 
+ Container postgres Waiting 
+ Container pgadmin_tcc Starting 
+ Container publisher_mqtt_c Started 
+ Container pgadmin_tcc Started 
+ Container grafana_tcc Started 
+ Container postgres Healthy 
+ Container subscriber Starting 
+ Container subscriber Started 
+
+[2026-10-20 08:24:51] >> Conteineres em execucao
+NAME               IMAGE                              COMMAND                  SERVICE          CREATED          STATUS                    PORTS
+grafana_tcc        grafana/grafana:latest             "/run.sh"                grafana          14 seconds ago   Up 11 seconds             0.0.0.0:3000->3000/tcp, [::]:3000->3000/tcp
+mosquitto          eclipse-mosquitto:2.0              "/docker-entrypoint.ÔÇª"   mosquitto        14 seconds ago   Up 12 seconds             0.0.0.0:1883->1883/tcp, [::]:1883->1883/tcp
+pgadmin_tcc        dpage/pgadmin4                     "/entrypoint.sh"         pgadmin          14 seconds ago   Up 11 seconds             0.0.0.0:8080->80/tcp, [::]:8080->80/tcp
+postgres           postgres:16                        "docker-entrypoint.sÔÇª"   postgres         14 seconds ago   Up 12 seconds (healthy)   0.0.0.0:5432->5432/tcp, [::]:5432->5432/tcp
+publisher_mqtt_c   monitoramento_tcc-publisher-mqtt   "/app/bin/publisher_ÔÇª"   publisher-mqtt   14 seconds ago   Up 11 seconds             
+subscriber         monitoramento_tcc-subscriber       "/app/bin/subscriber"    subscriber       14 seconds ago   Up 6 seconds              0.0.0.0:1502->1502/tcp, [::]:1502->1502/tcp
+
+[2026-10-20 08:24:51] >> Historico anterior ao desligamento, conferido depois do reinicio
+ linhas |        primeiro        |         ultimo         
+--------+------------------------+------------------------
+  19877 | 2001-09-09 01:46:40+00 | 2026-10-20 11:14:05+00
+(1 row)
+
+
+[2026-10-20 08:24:51] Antes do desligamento: linhas 19877, primeiro 1000000000, ultimo 1792494845
+[2026-10-20 08:24:52] Depois do reinicio:    linhas 19877, primeiro 1000000000, ultimo 1792494845
+[2026-10-20 08:24:52] Primeira leitura nova gravada 14 s depois do comando de subida
+[2026-10-20 08:24:53] >> Primeiras leituras depois do reinicio
+        instante        | temp_fornalha | press_fornalha | vazao_caldeira | press_vapor 
+------------------------+---------------+----------------+----------------+-------------
+ 2026-10-20 11:24:50+00 |        1277.2 |           -6.4 |           14.3 |        14.1
+(1 row)
+
+
+[2026-10-20 08:24:53] FIM DA A1

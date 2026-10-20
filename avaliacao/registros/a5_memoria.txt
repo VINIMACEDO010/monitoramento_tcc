@@ -1,0 +1,10 @@
+A5 - verificacao de memoria (AddressSanitizer + UndefinedBehaviorSanitizer, gcc 13, Ubuntu 24.04)
+Execucao instrumentada de cerca de 10,5 min (eventos em a5_eventos.log), processos com UID 2000.
+Relatorios gerados pelos sanitizadores: 0 (nenhum).
+Teste de controle: um programa com vazamento proposital gerou relatorio no mesmo ambiente (canario), o que confirma que o LeakSanitizer estava ativo.
+
+Avisos do compilador (gcc -Wall -Wextra):
+subscriber/util.c:40:5: warning: ignoring return value of 'write' declared with attribute 'warn_unused_result' [-Wunused-result]
+   40 |     write(STDERR_FILENO, buffer2, (size_t)n);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--

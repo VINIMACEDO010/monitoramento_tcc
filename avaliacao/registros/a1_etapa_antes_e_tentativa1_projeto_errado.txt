@@ -1,0 +1,475 @@
+[2026-10-20 08:14:06] A1 ETAPA ANTES
+[2026-10-20 08:14:08] >> Versao do repositorio
+v1.0-tcc
+
+[2026-10-20 08:14:16] >> Estado antes do desligamento
+ linhas |        primeiro        |         ultimo         
+--------+------------------------+------------------------
+  19877 | 2001-09-09 01:46:40+00 | 2026-10-20 11:14:05+00
+(1 row)
+
+
+[2026-10-20 08:14:20] >> Desligando os conteineres (sem -v, os volumes ficam)
+docker :  Container grafana_tcc Stopping 
+ Container publisher_mqtt_c Stopping 
+ Container subscriber Stopping 
+ Container pgadmin_tcc Stopping 
+ Container publisher_mqtt_c Stopped 
+ Container publisher_mqtt_c Removing 
+ Container publisher_mqtt_c Removed 
+ Container subscriber Stopped 
+ Container subscriber Removing 
+ Container grafana_tcc Stopped 
+ Container grafana_tcc Removing 
+ Container subscriber Removed 
+ Container mosquitto Stopping 
+ Container grafana_tcc Removed 
+ Container mosquitto Stopped 
+ Container mosquitto Removing 
+ Container mosquitto Removed 
+ Container pgadmin_tcc Stopped 
+ Container pgadmin_tcc Removing 
+ Container pgadmin_tcc Removed 
+ Container postgres Stopping 
+ Container postgres Stopped 
+ Container postgres Removing 
+ Container postgres Removed 
+ Network monitoramento_tcc_default Removing 
+ Network monitoramento_tcc_default Removed 
+
+[2026-10-20 08:14:20] >> Volumes que continuam existindo
+DRIVER    VOLUME NAME
+local     a3d2a0c39d5dd865a4ccba8d83e1a0c060c5dd9d1ad7f79b096546f970aad978
+local     a76f88b06445daf272a1b23123f1cd7ea8afa9d8d17e8a16e5f793a019cbdebb
+local     ac29d7bed80a15ec84e501b9e6f515636a9c37859671e49c6cee4f8bc154ce1c
+local     b26d485c3707518d695cf4249d8072de62d199e28c7539ff8515ab3cd985b82b
+local     d7bab70bf29b8102a1ffeaee5cdce70451d07ffe90e3b90006ed2041f23c9ab9
+local     monitoramento_tcc_grafana-data
+local     monitoramento_tcc_postgres-data
+
+[2026-10-20 08:14:20] Agora reinicie o computador, abra o Docker Desktop e rode a etapa depois.
+[2026-10-20 08:17:21] A1 ETAPA DEPOIS
+[2026-10-20 08:17:22] >> Subindo o ambiente
+docker : unable to get image 'postgres:16': failed to connect to the docker API at 
+npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and if the daemon is running: open 
+//./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.
+[2026-10-20 08:18:43] A1 ETAPA DEPOIS
+[2026-10-20 08:22:14] >> Subindo o ambiente
+docker :  Image monitoramento_tcc_publico-subscriber Building 
+ Image monitoramento_tcc_publico-publisher-mqtt Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 1.27kB 0.0s done
+#1 DONE 0.0s
+
+#2 [subscriber internal] load build definition from Dockerfile
+#2 transferring dockerfile: 391B 0.1s done
+#2 transferring dockerfile: 391B 0.1s done
+#2 WARN: FromPlatformFlagConstDisallowed: FROM --platform flag should not use constant value "linux/amd64" (line 1)
+#2 WARN: FromPlatformFlagConstDisallowed: FROM --platform flag should not use constant value "linux/amd64" (line 1)
+#2 DONE 0.2s
+
+#3 [subscriber internal] load metadata for docker.io/library/archlinux:latest
+#3 DONE 3.8s
+
+#4 [publisher-mqtt internal] load .dockerignore
+#4 transferring context: 2B done
+#4 DONE 0.1s
+
+#5 [subscriber internal] load build context
+#5 DONE 0.0s
+
+#6 [subscriber 1/6] FROM docker.io/library/archlinux:latest@sha256:e43f1fd80e073992c5f173efbbbf65144170bf60aeb7369940087d63eacea8f4
+#6 resolve docker.io/library/archlinux:latest@sha256:e43f1fd80e073992c5f173efbbbf65144170bf60aeb7369940087d63eacea8f4 0.0s done
+#6 resolve docker.io/library/archlinux:latest@sha256:e43f1fd80e073992c5f173efbbbf65144170bf60aeb7369940087d63eacea8f4 0.0s done
+#6 ...
+
+#5 [publisher-mqtt internal] load build context
+#5 transferring context: 44.44kB 0.1s done
+#5 DONE 0.2s
+
+#6 [subscriber 1/6] FROM docker.io/library/archlinux:latest@sha256:e43f1fd80e073992c5f173efbbbf65144170bf60aeb7369940087d63eacea8f4
+#6 sha256:e4c7c6c5e741df9b1f653c976a01966fc327fd61abe3733157d1a9051c2f10bc 0B / 8.71kB 0.2s
+#6 sha256:e4c7c6c5e741df9b1f653c976a01966fc327fd61abe3733157d1a9051c2f10bc 8.71kB / 8.71kB 0.3s
+#6 sha256:7450fb54bb4fadc27bfa0277ecfbf489a6457ee6c2ae59d4300bde68610b6f48 0B / 134.17MB 0.2s
+#6 sha256:e4c7c6c5e741df9b1f653c976a01966fc327fd61abe3733157d1a9051c2f10bc 8.71kB / 8.71kB 0.3s done
+#6 sha256:7450fb54bb4fadc27bfa0277ecfbf489a6457ee6c2ae59d4300bde68610b6f48 7.34MB / 134.17MB 2.0s
+#6 sha256:7450fb54bb4fadc27bfa0277ecfbf489a6457ee6c2ae59d4300bde68610b6f48 14.68MB / 134.17MB 3.3s
+#6 sha256:7450fb54bb4fadc27bfa0277ecfbf489a6457ee6c2ae59d4300bde68610b6f48 22.02MB / 134.17MB 4.7s
+#6 sha256:7450fb54bb4fadc27bfa0277ecfbf489a6457ee6c2ae59d4300bde68610b6f48 29.36MB / 134.17MB 5.9s
+#6 sha256:7450fb54bb4fadc27bfa0277ecfbf489a6457ee6c2ae59d4300bde68610b6f48 36.70MB / 134.17MB 7.2s
+#6 sha256:7450fb54bb4fadc27bfa0277ecfbf489a6457ee6c2ae59d4300bde68610b6f48 44.04MB / 134.17MB 8.5s
+#6 sha256:7450fb54bb4fadc27bfa0277ecfbf489a6457ee6c2ae59d4300bde68610b6f48 51.38MB / 134.17MB 9.7s
+#6 sha256:7450fb54bb4fadc27bfa0277ecfbf489a6457ee6c2ae59d4300bde68610b6f48 58.72MB / 134.17MB 11.5s
+#6 sha256:7450fb54bb4fadc27bfa0277ecfbf489a6457ee6c2ae59d4300bde68610b6f48 66.06MB / 134.17MB 12.9s
+#6 sha256:7450fb54bb4fadc27bfa0277ecfbf489a6457ee6c2ae59d4300bde68610b6f48 73.40MB / 134.17MB 14.1s
+#6 sha256:7450fb54bb4fadc27bfa0277ecfbf489a6457ee6c2ae59d4300bde68610b6f48 80.74MB / 134.17MB 15.4s
+#6 sha256:7450fb54bb4fadc27bfa0277ecfbf489a6457ee6c2ae59d4300bde68610b6f48 88.08MB / 134.17MB 16.6s
+#6 sha256:7450fb54bb4fadc27bfa0277ecfbf489a6457ee6c2ae59d4300bde68610b6f48 95.42MB / 134.17MB 18.1s
+#6 sha256:7450fb54bb4fadc27bfa0277ecfbf489a6457ee6c2ae59d4300bde68610b6f48 102.76MB / 134.17MB 19.6s
+#6 sha256:7450fb54bb4fadc27bfa0277ecfbf489a6457ee6c2ae59d4300bde68610b6f48 110.10MB / 134.17MB 21.7s
+#6 sha256:7450fb54bb4fadc27bfa0277ecfbf489a6457ee6c2ae59d4300bde68610b6f48 117.44MB / 134.17MB 24.0s
+#6 sha256:7450fb54bb4fadc27bfa0277ecfbf489a6457ee6c2ae59d4300bde68610b6f48 124.78MB / 134.17MB 25.8s
+#6 sha256:7450fb54bb4fadc27bfa0277ecfbf489a6457ee6c2ae59d4300bde68610b6f48 132.12MB / 134.17MB 27.7s
+#6 sha256:7450fb54bb4fadc27bfa0277ecfbf489a6457ee6c2ae59d4300bde68610b6f48 134.17MB / 134.17MB 28.6s done
+#6 extracting sha256:7450fb54bb4fadc27bfa0277ecfbf489a6457ee6c2ae59d4300bde68610b6f48
+#6 extracting sha256:7450fb54bb4fadc27bfa0277ecfbf489a6457ee6c2ae59d4300bde68610b6f48 4.7s done
+#6 extracting sha256:e4c7c6c5e741df9b1f653c976a01966fc327fd61abe3733157d1a9051c2f10bc
+#6 extracting sha256:7450fb54bb4fadc27bfa0277ecfbf489a6457ee6c2ae59d4300bde68610b6f48 4.7s done
+#6 extracting sha256:e4c7c6c5e741df9b1f653c976a01966fc327fd61abe3733157d1a9051c2f10bc 0.0s done
+#6 DONE 33.5s
+
+#7 [publisher-mqtt 2/6] RUN pacman -Syu --noconfirm     mosquitto     postgresql-libs     libmodbus     base-devel     pkgconf     git
+#7 0.326 :: Synchronizing package databases...
+#7 5.279  core downloading...
+#7 5.279  extra downloading...
+#7 5.509 :: Starting full system upgrade...
+#7 5.520 resolving dependencies...
+#7 5.525 looking for conflicting packages...
+#7 5.530 
+#7 5.530 Package (48)             Old Version  New Version                 Net Change  Download Size
+#7 5.530 
+#7 5.530 core/autoconf                         2.73-1                        2.25 MiB       0.64 MiB
+#7 5.530 core/automake                         1.19-1                        1.66 MiB       0.63 MiB
+#7 5.530 core/bison                            3.8.2-8                       2.52 MiB       0.75 MiB
+#7 5.530 extra/boost-libs                      1.92.0-1                     51.10 MiB       6.16 MiB
+#7 5.530 extra/c-ares                          1.34.8-1                      0.53 MiB       0.23 MiB
+#7 5.530 extra/cjson                           1.7.19-1                      0.09 MiB       0.03 MiB
+#7 5.530 extra/cpio                            2.15-3                        0.98 MiB       0.22 MiB
+#7 5.530 core/db5.3                            5.3.28-7                      6.48 MiB       1.26 MiB
+#7 5.530 core/dbus                1.16.2-1     1.16.2-2                      0.03 MiB       0.35 MiB
+#7 5.530 core/debugedit                        5.3-2                         0.13 MiB       0.05 MiB
+#7 5.530 core/diffutils                        3.12-2                        1.50 MiB       0.33 MiB
+#7 5.530 core/elfutils                         0.196-1                       4.30 MiB       0.68 MiB
+#7 5.530 core/fakeroot                         1:1.37.2-3                    0.14 MiB       0.08 MiB
+#7 5.530 core/flex                             2.6.4-6                       0.84 MiB       0.29 MiB
+#7 5.530 core/gc                               8.2.12-1                      0.76 MiB       0.23 MiB
+#7 5.530 core/gcc                              16.2.1+r23+gd564253eb6c8-1  220.89 MiB      57.93 MiB
+#7 5.530 extra/gdb                             18.1-1                       32.19 MiB       8.18 MiB
+#7 5.530 extra/gdb-common                      18.1-1                        1.16 MiB       0.12 MiB
+#7 5.530 core/groff                            1.24.2-1                      9.11 MiB       2.43 MiB
+#7 5.530 core/guile                            3.0.11-1                     54.49 MiB       8.39 MiB
+#7 5.530 core/libisl                           0.28-1                        5.90 MiB       0.94 MiB
+#7 5.530 core/libmpc                           1.4.1-1                       0.19 MiB       0.09 MiB
+#7 5.530 core/libtool                          2.6.2-5                       2.34 MiB       0.42 MiB
+#7 5.530 core/linux-api-headers   7.2-1        7.3-1                         0.07 MiB       1.53 MiB
+#7 5.530 core/m4                               1.4.21-2                      0.71 MiB       0.27 MiB
+#7 5.530 core/make                             4.4.1-3                       1.66 MiB       0.51 MiB
+#7 5.530 core/mpdecimal                        4.0.1-3                       0.32 MiB       0.10 MiB
+#7 5.530 core/patch                            2.8-1                         0.17 MiB       0.08 MiB
+#7 5.530 core/perl                             5.44.0-1                     72.30 MiB      20.98 MiB
+#7 5.530 extra/perl-error                      0.17030-3                     0.04 MiB       0.02 MiB
+#7 5.530 extra/perl-mailtools                  2.22-3                        0.10 MiB       0.06 MiB
+#7 5.530 extra/perl-timedate                   2.35-1                        0.15 MiB       0.06 MiB
+#7 5.530 core/python                           3.14.8-1                     73.79 MiB      13.55 MiB
+#7 5.530 extra/source-highlight                3.1.9-19                      3.27 MiB       0.69 MiB
+#7 5.530 core/sudo                             1.9.17.p2-6                   7.85 MiB       1.86 MiB
+#7 5.530 core/systemd             262-1        262.1-1                       0.03 MiB      10.68 MiB
+#7 5.530 core/systemd-libs        262-1        262.1-1                       0.01 MiB       1.44 MiB
+#7 5.530 core/systemd-sysvcompat  262-1        262.1-1                       0.00 MiB       0.01 MiB
+#7 5.530 core/texinfo                          7.3-3                        12.69 MiB       2.13 MiB
+#7 5.530 core/which                            2.25-1                        0.03 MiB       0.02 MiB
+#7 5.530 extra/xxhash                          0.8.4-1                       0.42 MiB       0.10 MiB
+#7 5.530 extra/zlib-ng                         2.3.3-1                       0.28 MiB       0.11 MiB
+#7 5.530 core/base-devel                       1-2                           0.00 MiB       0.00 MiB
+#7 5.530 extra/git                             2.56.0-1                     33.54 MiB       7.43 MiB
+#7 5.530 extra/libmodbus                       3.2.0-1                       0.10 MiB       0.04 MiB
+#7 5.530 extra/mosquitto                       2.1.2-2                       1.77 MiB       0.51 MiB
+#7 5.530 core/pkgconf                          3.0.10-1                      0.34 MiB       0.12 MiB
+#7 5.530 extra/postgresql-libs                 18.6-4                       10.72 MiB       1.94 MiB
+#7 5.530 
+#7 5.530 Total Download Size:   154.64 MiB
+#7 5.530 Total Installed Size:  672.24 MiB
+#7 5.530 Net Upgrade Size:      619.95 MiB
+#7 5.530 
+#7 5.530 :: Proceed with installation? [Y/n] 
+#7 5.531 :: Retrieving packages...
+#7 49.76  gcc-16.2.1+r23+gd564253eb6c8-1-x86_64 downloading...
+#7 49.76  perl-5.44.0-1-x86_64 downloading...
+#7 49.76  python-3.14.8-1-x86_64 downloading...
+#7 49.76  systemd-262.1-1-x86_64 downloading...
+#7 49.76  guile-3.0.11-1-x86_64 downloading...
+#7 49.76  gdb-18.1-1-x86_64 downloading...
+#7 49.76  git-2.56.0-1-x86_64 downloading...
+#7 49.76  boost-libs-1.92.0-1-x86_64 downloading...
+#7 49.76  groff-1.24.2-1-x86_64 downloading...
+#7 49.76  texinfo-7.3-3-x86_64 downloading...
+#7 49.76  postgresql-libs-18.6-4-x86_64 downloading...
+#7 49.76  sudo-1.9.17.p2-6-x86_64 downloading...
+#7 49.76  linux-api-headers-7.3-1-x86_64 downloading...
+#7 49.76  systemd-libs-262.1-1-x86_64 downloading...
+#7 49.76  db5.3-5.3.28-7-x86_64 downloading...
+#7 49.76  libisl-0.28-1-x86_64 downloading...
+#7 49.76  bison-3.8.2-8-x86_64 downloading...
+#7 49.76  source-highlight-3.1.9-19-x86_64 downloading...
+#7 49.76  elfutils-0.196-1-x86_64 downloading...
+#7 49.76  autoconf-2.73-1-any downloading...
+#7 49.76  automake-1.19-1-any downloading...
+#7 49.76  mosquitto-2.1.2-2-x86_64 downloading...
+#7 49.76  make-4.4.1-3-x86_64 downloading...
+#7 49.76  libtool-2.6.2-5-x86_64 downloading...
+#7 49.76  dbus-1.16.2-2-x86_64 downloading...
+#7 49.76  diffutils-3.12-2-x86_64 downloading...
+#7 49.76  flex-2.6.4-6-x86_64 downloading...
+#7 49.76  m4-1.4.21-2-x86_64 downloading...
+#7 49.76  c-ares-1.34.8-1-x86_64 downloading...
+#7 49.76  gc-8.2.12-1-x86_64 downloading...
+#7 49.76  cpio-2.15-3-x86_64 downloading...
+#7 49.76  gdb-common-18.1-1-x86_64 downloading...
+#7 49.76  pkgconf-3.0.10-1-x86_64 downloading...
+#7 49.76  zlib-ng-2.3.3-1-x86_64 downloading...
+#7 49.76  xxhash-0.8.4-1-x86_64 downloading...
+#7 49.76  mpdecimal-4.0.1-3-x86_64 downloading...
+#7 49.76  libmpc-1.4.1-1-x86_64 downloading...
+#7 49.76  patch-2.8-1-x86_64 downloading...
+#7 49.76  fakeroot-1:1.37.2-3-x86_64 downloading...
+#7 49.76  perl-timedate-2.35-1-any downloading...
+#7 49.76  perl-mailtools-2.22-3-any downloading...
+#7 49.76  debugedit-5.3-2-x86_64 downloading...
+#7 49.76  libmodbus-3.2.0-1-x86_64 downloading...
+#7 49.76  cjson-1.7.19-1-x86_64 downloading...
+#7 49.76  perl-error-0.17030-3-any downloading...
+#7 49.76  which-2.25-1-x86_64 downloading...
+#7 49.76  systemd-sysvcompat-262.1-1-x86_64 downloading...
+#7 49.76  base-devel-1-2-any downloading...
+#7 49.76 checking keyring...
+#7 49.92 checking package integrity...
+#7 51.05 loading package files...
+#7 51.14 checking for file conflicts...
+#7 51.16 :: Processing package changes...
+#7 51.16 upgrading linux-api-headers...
+#7 51.53 installing cjson...
+#7 51.54 installing c-ares...
+#7 51.55 upgrading systemd-libs...
+#7 51.58 installing mosquitto...
+#7 51.62 installing postgresql-libs...
+#7 51.67 installing libmodbus...
+#7 51.68 installing m4...
+#7 51.68 installing diffutils...
+#7 51.68 installing db5.3...
+#7 51.71 installing perl...
+#7 52.47 installing autoconf...
+#7 52.50 installing automake...
+#7 52.51 installing bison...
+#7 52.52 installing xxhash...
+#7 52.53 installing cpio...
+#7 52.53 installing elfutils...
+#7 52.55 installing boost-libs...
+#7 52.70 Optional dependencies for boost-libs
+#7 52.70     openmpi: for mpi support
+#7 52.70 installing mpdecimal...
+#7 52.70 installing python...
+#7 53.25 Optional dependencies for python
+#7 53.25     python-setuptools: for building Python packages using tooling that is usually bundled with Python
+#7 53.25     python-pip: for installing Python packages using tooling that is usually bundled with Python
+#7 53.25     python-pipx: for installing Python software not packaged on Arch Linux
+#7 53.25     sqlite: for a default database integration [installed]
+#7 53.25     xz: for lzma [installed]
+#7 53.25     tk: for tkinter
+#7 53.25 installing gc...
+#7 53.26 installing guile...
+#7 53.51 installing gdb-common...
+#7 53.52 installing source-highlight...
+#7 53.54 Optional dependencies for source-highlight
+#7 53.54     lesspipe: src-hilite-lesspipe.sh
+#7 53.54 installing gdb...
+#7 53.75 installing debugedit...
+#7 53.75 installing fakeroot...
+#7 53.75 installing flex...
+#7 53.76 installing libisl...
+#7 53.77 installing libmpc...
+#7 53.77 installing gcc...
+#7 54.32 Optional dependencies for gcc
+#7 54.32     lib32-gcc-libs: for generating code for 32-bit ABI
+#7 54.32 installing groff...
+#7 54.36 Optional dependencies for groff
+#7 54.36     netpbm: for use together with man -H command interaction in browsers
+#7 54.36     psutils: for use together with man -H command interaction in browsers
+#7 54.36     libxaw: for gxditview
+#7 54.36     perl-file-homedir: for use with glilypond
+#7 54.36 installing libtool...
+#7 54.37 installing make...
+#7 54.38 installing patch...
+#7 54.38 Optional dependencies for patch
+#7 54.38     ed: for patch -e functionality
+#7 54.38 installing pkgconf...
+#7 54.38 installing sudo...
+#7 54.40 installing texinfo...
+#7 54.46 Optional dependencies for texinfo
+#7 54.46     perl-archive-zip: EPUB file output via texi2any
+#7 54.46 installing which...
+#7 54.46 upgrading dbus...
+#7 54.47 upgrading systemd...
+#7 55.09 Creating group 'mosquitto' with GID 969.
+#7 55.09 Creating user 'mosquitto' (Mosquitto MQTT Broker) with UID 969 and GID 969.
+#7 55.97 installing base-devel...
+#7 55.97 installing perl-error...
+#7 55.97 installing perl-timedate...
+#7 55.98 installing perl-mailtools...
+#7 55.98 installing zlib-ng...
+#7 55.99 installing git...
+#7 56.24 Optional dependencies for git
+#7 56.24     git-zsh-completion: upstream zsh completion
+#7 56.24     tk: gitk and git gui
+#7 56.24     openssh: ssh transport and crypto
+#7 56.24     man: show help with `git command --help`
+#7 56.24     perl-libwww: git svn
+#7 56.24     perl-term-readkey: git svn and interactive.singlekey setting
+#7 56.24     perl-io-socket-ssl: git send-email TLS support
+#7 56.24     perl-authen-sasl: git send-email TLS support
+#7 56.24     perl-cgi: gitweb (web interface) support
+#7 56.24     python: git svn & git p4 [installed]
+#7 56.24     subversion: git svn
+#7 56.24     org.freedesktop.secrets: keyring credential helper
+#7 56.24     libsecret: libsecret credential helper [installed]
+#7 56.24     less: the default pager for git
+#7 56.24 upgrading systemd-sysvcompat...
+#7 58.32 :: Running post-transaction hooks...
+#7 58.32 ( 1/13) Configuring dynamic linker run-time bindings...
+#7 58.59 ( 2/13) Creating system user accounts...
+#7 58.67 Creating group 'git' with GID 968.
+#7 58.68 Creating user 'git' (git daemon user) with UID 968 and GID 968.
+#7 59.26 ( 3/13) Creating temporary files...
+#7 59.35 /usr/lib/tmpfiles.d/journal-nocow.conf:26: Failed to resolve specifier: uninitialized /etc/ detected, skipping.
+#7 59.35 All rules containing unresolvable specifiers will be skipped.
+#7 59.37 ( 4/13) Updating journal message catalog...
+#7 59.49 ( 5/13) Updating udev hardware database...
+#7 60.58 ( 6/13) Applying kernel sysctl settings...
+#7 60.71   Skipped: Current root is not booted.
+#7 60.71 ( 7/13) Reloading system manager configuration...
+#7 60.81   Skipped: Current root is not booted.
+#7 60.81 ( 8/13) Reloading user manager configuration...
+#7 60.88   Skipped: Current root is not booted.
+#7 60.88 ( 9/13) Enqueuing marked services...
+#7 60.95   Skipped: Current root is not booted.
+#7 60.95 (10/13) Reloading device manager configuration...
+#7 61.03   Skipped: Current root is not booted.
+#7 61.03 (11/13) Arming ConditionNeedsUpdate...
+#7 61.11 (12/13) Reloading system bus configuration...
+#7 61.21   Skipped: Current root is not booted.
+#7 61.21 (13/13) Checking for old perl modules...
+#7 DONE 73.9s
+
+#8 [publisher-mqtt 3/6] RUN useradd -u 2000 -m subscriber
+#8 DONE 1.8s
+
+#9 [publisher-mqtt 4/6] WORKDIR /app
+#9 DONE 0.4s
+
+#10 [subscriber 5/6] COPY --chown=subscriber:subscriber . .
+#10 DONE 0.7s
+
+#11 [subscriber 6/6] RUN rm -rf bin/ && chmod +x ./build.sh && ./build.sh build
+#11 0.893 Compilando subscriber...
+#11 1.158 Compilando publisher_mqtt...
+#11 1.308 Compilando publisher_modbus...
+#11 1.428 Compilando teste_envio...
+#11 1.586 Build conclu├¡do.
+#11 DONE 1.7s
+
+#12 [publisher-mqtt] exporting to image
+#12 exporting layers
+#12 ...
+
+#13 [subscriber] exporting to image
+#13 exporting layers 46.5s done
+#13 exporting manifest sha256:34b4e00185c86a886bcad9e5d2edb7893b5d0deaf6de40c74b9f3d78431a8947
+#13 ...
+
+#12 [publisher-mqtt] exporting to image
+#12 exporting layers 46.5s done
+#12 exporting manifest sha256:63b49f5fe8d15f499ab599016176f180ce4560e38fcf58bf43350f2f70404f93
+#12 exporting manifest sha256:63b49f5fe8d15f499ab599016176f180ce4560e38fcf58bf43350f2f70404f93 0.2s done
+#12 exporting config sha256:9965696274e60fbedfc3bd4b026d004a7ffde2111776ccadb9ab2b31668a9353
+#12 exporting config sha256:9965696274e60fbedfc3bd4b026d004a7ffde2111776ccadb9ab2b31668a9353 0.1s done
+#12 exporting attestation manifest sha256:024fe3a631e585b3ee8c76297165054c988541d2b231d7415f6879b55938c78a
+#12 exporting attestation manifest sha256:024fe3a631e585b3ee8c76297165054c988541d2b231d7415f6879b55938c78a 0.4s done
+#12 exporting manifest list sha256:e61f32a9adcf046fb8e5a931c376e66d05796879f4a8fc2b8e0bfc588d87184b
+#12 exporting manifest list sha256:e61f32a9adcf046fb8e5a931c376e66d05796879f4a8fc2b8e0bfc588d87184b 0.2s done
+#12 naming to docker.io/library/monitoramento_tcc_publico-publisher-mqtt:latest 0.1s done
+#12 unpacking to docker.io/library/monitoramento_tcc_publico-publisher-mqtt:latest
+#12 ...
+
+#13 [subscriber] exporting to image
+#13 exporting manifest sha256:34b4e00185c86a886bcad9e5d2edb7893b5d0deaf6de40c74b9f3d78431a8947 0.3s done
+#13 exporting config sha256:ea2b112063a1d48501648cf883fc3ea1c58ea0804ef67220a1d7854af37ce762 0.2s done
+#13 exporting attestation manifest sha256:e41c33af7846682fd98d5101316832710bc50381b3b78d5a9b1f66e0c85df874 0.5s done
+#13 exporting manifest list sha256:9ef8f6daa591169a0c5bd08a0b3fed1aeeb801df5c1cc8a4adfc307e69d004f3 0.2s done
+#13 naming to docker.io/library/monitoramento_tcc_publico-subscriber:latest 0.0s done
+#13 unpacking to docker.io/library/monitoramento_tcc_publico-subscriber:latest
+#13 ...
+
+#12 [publisher-mqtt] exporting to image
+#12 unpacking to docker.io/library/monitoramento_tcc_publico-publisher-mqtt:latest 33.4s done
+#12 DONE 81.3s
+
+#13 [subscriber] exporting to image
+#13 unpacking to docker.io/library/monitoramento_tcc_publico-subscriber:latest 33.3s done
+#13 DONE 81.4s
+
+#14 [publisher-mqtt] resolving provenance for metadata file
+#14 DONE 0.1s
+
+#15 [subscriber] resolving provenance for metadata file
+#15 DONE 0.1s
+ Image monitoramento_tcc_publico-subscriber Built 
+ Image monitoramento_tcc_publico-publisher-mqtt Built 
+ Network monitoramento_tcc_publico_default Creating 
+ Network monitoramento_tcc_publico_default Created 
+ Volume monitoramento_tcc_publico_grafana-data Creating 
+ Volume monitoramento_tcc_publico_grafana-data Created 
+ Volume monitoramento_tcc_publico_postgres-data Creating 
+ Volume monitoramento_tcc_publico_postgres-data Created 
+ Container mosquitto Creating 
+ Container postgres Creating 
+ Container mosquitto Created 
+ Container publisher_mqtt_c Creating 
+ Container postgres Created 
+ Container grafana_tcc Creating 
+ Container pgadmin_tcc Creating 
+ Container subscriber Creating 
+ Container publisher_mqtt_c Created 
+ Container subscriber Created 
+ Container grafana_tcc Created 
+ Container pgadmin_tcc Created 
+ Container mosquitto Starting 
+ Container postgres Starting 
+ Container mosquitto Started 
+ Container publisher_mqtt_c Starting 
+ Container postgres Started 
+ Container pgadmin_tcc Starting 
+ Container grafana_tcc Starting 
+ Container postgres Waiting 
+ Container publisher_mqtt_c Started 
+ Container pgadmin_tcc Started 
+ Container grafana_tcc Started 
+ Container postgres Healthy 
+ Container subscriber Starting 
+ Container subscriber Started 
+
+[2026-10-20 08:22:20] >> Conteineres em execucao
+NAME               IMAGE                                      COMMAND                  SERVICE          CREATED          STATUS                    PORTS
+grafana_tcc        grafana/grafana:latest                     "/run.sh"                grafana          14 seconds ago   Up 12 seconds             0.0.0.0:3000->3000/tcp, [::]:3000->3000/tcp
+mosquitto          eclipse-mosquitto:2.0                      "/docker-entrypoint.ÔÇª"   mosquitto        15 seconds ago   Up 13 seconds             0.0.0.0:1883->1883/tcp, [::]:1883->1883/tcp
+pgadmin_tcc        dpage/pgadmin4                             "/entrypoint.sh"         pgadmin          14 seconds ago   Up 12 seconds             0.0.0.0:8080->80/tcp, [::]:8080->80/tcp
+postgres           postgres:16                                "docker-entrypoint.sÔÇª"   postgres         15 seconds ago   Up 13 seconds (healthy)   0.0.0.0:5432->5432/tcp, [::]:5432->5432/tcp
+publisher_mqtt_c   monitoramento_tcc_publico-publisher-mqtt   "/app/bin/publisher_ÔÇª"   publisher-mqtt   15 seconds ago   Up 13 seconds             
+subscriber         monitoramento_tcc_publico-subscriber       "/app/bin/subscriber"    subscriber       14 seconds ago   Up 7 seconds              0.0.0.0:1502->1502/tcp, [::]:1502->1502/tcp
+
+[2026-10-20 08:22:21] >> Historico anterior ao desligamento, conferido depois do reinicio
+ linhas | primeiro | ultimo 
+--------+----------+--------
+      0 |          | 
+(1 row)
+
+
+[2026-10-20 08:22:21] Antes do desligamento: linhas 19877, primeiro 1000000000, ultimo 1792494845
+[2026-10-20 08:22:22] Depois do reinicio:    linhas 0, primeiro 1792495339, ultimo 
+[2026-10-20 08:22:22] Primeira leitura nova gravada 217 s depois do comando de subida
+[2026-10-20 08:22:23] >> Primeiras leituras depois do reinicio
+        instante        | temp_fornalha | press_fornalha | vazao_caldeira | press_vapor 
+------------------------+---------------+----------------+----------------+-------------
+ 2026-10-20 11:22:19+00 |        1374.4 |           -1.7 |           11.5 |        13.9
+(1 row)
+
+
+[2026-10-20 08:22:23] FIM DA A1

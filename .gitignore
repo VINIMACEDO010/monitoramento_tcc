@@ -17,3 +17,8 @@ subscriber/bin
 *.pem
 pub_modbus
 pub_mqtt
+
+# saídas brutas dos scripts de avaliação (as cópias revisadas ficam em avaliacao/registros)
+testes/resultado_*.txt
+testes/a1_estado.txt
+testes/a7_injecao*.txt

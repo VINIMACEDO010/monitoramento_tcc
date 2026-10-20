@@ -1,0 +1,604 @@
+[2026-10-19 21:40:07] A2 EXECUCAO LONGA: 0.05 h, amostra de recursos a cada 10 min
+[2026-10-19 21:40:08] >> Versao do repositorio
+v1.0-tcc
+
+[2026-10-19 21:40:08] >> Docker
+Cliente 29.6.1 / Servidor 29.6.1
+
+[2026-10-19 21:40:08] >> Conteineres em execucao
+NAME               IMAGE                              COMMAND                  SERVICE          CREATED          STATUS                    PORTS
+grafana_tcc        grafana/grafana:latest             "/run.sh"                grafana          28 seconds ago   Up 27 seconds             0.0.0.0:3000->3000/tcp, [::]:3000->3000/tcp
+mosquitto          eclipse-mosquitto:2.0              "/docker-entrypoint.ÔÇª"   mosquitto        29 seconds ago   Up 27 seconds             0.0.0.0:1883->1883/tcp, [::]:1883->1883/tcp
+pgadmin_tcc        dpage/pgadmin4                     "/entrypoint.sh"         pgadmin          2 weeks ago      Up About a minute         0.0.0.0:8080->80/tcp, [::]:8080->80/tcp
+postgres           postgres:16                        "docker-entrypoint.sÔÇª"   postgres         29 seconds ago   Up 27 seconds (healthy)   0.0.0.0:5432->5432/tcp, [::]:5432->5432/tcp
+publisher_mqtt_c   monitoramento_tcc-publisher-mqtt   "/app/bin/publisher_ÔÇª"   publisher-mqtt   6 days ago       Up About a minute         
+subscriber         monitoramento_tcc-subscriber       "/app/bin/subscriber"    subscriber       6 days ago       Up About a minute         0.0.0.0:1502->1502/tcp, [::]:1502->1502/tcp
+
+[2026-10-19 21:40:09] >> Tamanho do banco no inicio
+  banco  | tabela_caldeira | linhas 
+---------+-----------------+--------
+ 8991 kB | 1024 kB         |  13296
+(1 row)
+
+
+[2026-10-19 21:40:09] Inicio da janela, instante 1792456809
+[2026-10-19 21:40:11] >> Recursos, amostra 1
+NAME               CPU %     MEM USAGE / LIMIT     MEM %
+grafana_tcc        1.75%     164.5MiB / 7.604GiB   2.11%
+postgres           0.03%     22.73MiB / 7.604GiB   0.29%
+mosquitto          0.06%     2.406MiB / 7.604GiB   0.03%
+subscriber         0.01%     4.879MiB / 7.604GiB   0.06%
+publisher_mqtt_c   0.00%     2.641MiB / 7.604GiB   0.03%
+pgadmin_tcc        0.06%     300.7MiB / 7.604GiB   3.86%
+
+[2026-10-19 21:43:11] >> Recursos, amostra 2
+NAME               CPU %     MEM USAGE / LIMIT     MEM %
+grafana_tcc        2.01%     155.2MiB / 7.604GiB   1.99%
+postgres           6.45%     22.95MiB / 7.604GiB   0.29%
+mosquitto          0.09%     2.344MiB / 7.604GiB   0.03%
+subscriber         0.01%     5.133MiB / 7.604GiB   0.07%
+publisher_mqtt_c   0.00%     1.922MiB / 7.604GiB   0.02%
+pgadmin_tcc        0.03%     301.2MiB / 7.604GiB   3.87%
+
+[2026-10-19 21:43:12] Fim da janela, instante 1792456992
+[2026-10-19 21:43:14] >> Recursos, amostra final
+NAME               CPU %     MEM USAGE / LIMIT     MEM %
+grafana_tcc        1.73%     155.5MiB / 7.604GiB   2.00%
+postgres           0.04%     22.79MiB / 7.604GiB   0.29%
+mosquitto          0.06%     2.344MiB / 7.604GiB   0.03%
+subscriber         0.00%     5.129MiB / 7.604GiB   0.07%
+publisher_mqtt_c   0.00%     1.922MiB / 7.604GiB   0.02%
+pgadmin_tcc        0.04%     301.2MiB / 7.604GiB   3.87%
+
+[2026-10-19 21:43:15] >> Resultado da execucao longa
+ leituras | esperadas | percentual | menor_intervalo_s | maior_intervalo_s | intervalos_acima_10s | intervalos_diferentes_de_5s 
+----------+-----------+------------+-------------------+-------------------+----------------------+-----------------------------
+       37 |        37 |     100.00 |                 5 |                 5 |                    0 |                           0
+(1 row)
+
+
+[2026-10-19 21:43:15] >> Intervalos fora de 5 s (se houver)
+ depois_de | intervalo_s 
+-----------+-------------
+(0 rows)
+
+
+[2026-10-19 21:43:16] >> Tamanho do banco no fim
+  banco  | tabela_caldeira | linhas 
+---------+-----------------+--------
+ 8991 kB | 1024 kB         |  13333
+(1 row)
+
+
+[2026-10-19 21:43:16] >> Log do subscriber (ultimas 20 linhas)
+subscriber  | NOTICE:  column "vazao_caldeira" of relation "caldeira" already exists, skipping
+subscriber  | NOTICE:  column "press_vapor" of relation "caldeira" already exists, skipping
+subscriber  | 1792456981: caldeira = 13430
+subscriber  | NOTICE:  relation "caldeira" already exists, skipping
+subscriber  | NOTICE:  column "temp_fornalha" of relation "caldeira" already exists, skipping
+subscriber  | NOTICE:  column "press_fornalha" of relation "caldeira" already exists, skipping
+subscriber  | NOTICE:  column "vazao_caldeira" of relation "caldeira" already exists, skipping
+subscriber  | NOTICE:  column "press_vapor" of relation "caldeira" already exists, skipping
+subscriber  | 1792456986: caldeira = 13774
+subscriber  | NOTICE:  relation "caldeira" already exists, skipping
+subscriber  | NOTICE:  column "temp_fornalha" of relation "caldeira" already exists, skipping
+subscriber  | NOTICE:  column "press_fornalha" of relation "caldeira" already exists, skipping
+subscriber  | NOTICE:  column "vazao_caldeira" of relation "caldeira" already exists, skipping
+subscriber  | NOTICE:  column "press_vapor" of relation "caldeira" already exists, skipping
+subscriber  | 1792456991: caldeira = 12451
+subscriber  | NOTICE:  relation "caldeira" already exists, skipping
+subscriber  | NOTICE:  column "temp_fornalha" of relation "caldeira" already exists, skipping
+subscriber  | NOTICE:  column "press_fornalha" of relation "caldeira" already exists, skipping
+subscriber  | NOTICE:  column "vazao_caldeira" of relation "caldeira" already exists, skipping
+subscriber  | NOTICE:  column "press_vapor" of relation "caldeira" already exists, skipping
+
+[2026-10-19 21:43:16] FIM DA A2
+[2026-10-19 21:45:58] A2 EXECUCAO LONGA: 8 h, amostra de recursos a cada 10 min
+[2026-10-19 21:45:59] >> Versao do repositorio
+v1.0-tcc
+
+[2026-10-19 21:45:59] >> Docker
+Cliente 29.6.1 / Servidor 29.6.1
+
+[2026-10-19 21:45:59] >> Conteineres em execucao
+NAME               IMAGE                              COMMAND                  SERVICE          CREATED         STATUS                   PORTS
+grafana_tcc        grafana/grafana:latest             "/run.sh"                grafana          6 minutes ago   Up 6 minutes             0.0.0.0:3000->3000/tcp, [::]:3000->3000/tcp
+mosquitto          eclipse-mosquitto:2.0              "/docker-entrypoint.ÔÇª"   mosquitto        6 minutes ago   Up 6 minutes             0.0.0.0:1883->1883/tcp, [::]:1883->1883/tcp
+pgadmin_tcc        dpage/pgadmin4                     "/entrypoint.sh"         pgadmin          2 weeks ago     Up 6 minutes             0.0.0.0:8080->80/tcp, [::]:8080->80/tcp
+postgres           postgres:16                        "docker-entrypoint.sÔÇª"   postgres         6 minutes ago   Up 6 minutes (healthy)   0.0.0.0:5432->5432/tcp, [::]:5432->5432/tcp
+publisher_mqtt_c   monitoramento_tcc-publisher-mqtt   "/app/bin/publisher_ÔÇª"   publisher-mqtt   6 days ago      Up 6 minutes             
+subscriber         monitoramento_tcc-subscriber       "/app/bin/subscriber"    subscriber       6 days ago      Up 6 minutes             0.0.0.0:1502->1502/tcp, [::]:1502->1502/tcp
+
+[2026-10-19 21:46:00] >> Tamanho do banco no inicio
+  banco  | tabela_caldeira | linhas 
+---------+-----------------+--------
+ 8999 kB | 1032 kB         |  13366
+(1 row)
+
+
+[2026-10-19 21:46:00] Inicio da janela, instante 1792457160
+[2026-10-19 21:46:01] >> Recursos, amostra 1
+NAME               CPU %     MEM USAGE / LIMIT     MEM %
+grafana_tcc        1.97%     145.8MiB / 7.604GiB   1.87%
+postgres           0.00%     23.94MiB / 7.604GiB   0.31%
+mosquitto          0.06%     2.094MiB / 7.604GiB   0.03%
+subscriber         0.01%     4.676MiB / 7.604GiB   0.06%
+publisher_mqtt_c   0.00%     1.922MiB / 7.604GiB   0.02%
+pgadmin_tcc        0.05%     301.1MiB / 7.604GiB   3.87%
+
+[2026-10-19 21:56:03] >> Recursos, amostra 2
+NAME               CPU %     MEM USAGE / LIMIT     MEM %
+grafana_tcc        1.79%     146.2MiB / 7.604GiB   1.88%
+postgres           0.32%     23.75MiB / 7.604GiB   0.31%
+mosquitto          0.07%     2.789MiB / 7.604GiB   0.04%
+subscriber         0.01%     5.402MiB / 7.604GiB   0.07%
+publisher_mqtt_c   0.06%     1.922MiB / 7.604GiB   0.02%
+pgadmin_tcc        0.04%     301MiB / 7.604GiB     3.87%
+
+[2026-10-19 22:06:05] >> Recursos, amostra 3
+NAME               CPU %     MEM USAGE / LIMIT     MEM %
+grafana_tcc        1.41%     143.5MiB / 7.604GiB   1.84%
+postgres           3.22%     31.2MiB / 7.604GiB    0.40%
+mosquitto          0.06%     2.332MiB / 7.604GiB   0.03%
+subscriber         0.01%     3.238MiB / 7.604GiB   0.04%
+publisher_mqtt_c   0.00%     1.898MiB / 7.604GiB   0.02%
+pgadmin_tcc        0.05%     255.9MiB / 7.604GiB   3.29%
+
+[2026-10-19 22:16:08] >> Recursos, amostra 4
+NAME               CPU %     MEM USAGE / LIMIT     MEM %
+grafana_tcc        1.45%     143.2MiB / 7.604GiB   1.84%
+postgres           0.04%     30.56MiB / 7.604GiB   0.39%
+mosquitto          0.06%     1.746MiB / 7.604GiB   0.02%
+subscriber         0.01%     3.953MiB / 7.604GiB   0.05%
+publisher_mqtt_c   0.02%     2.148MiB / 7.604GiB   0.03%
+pgadmin_tcc        0.18%     256.2MiB / 7.604GiB   3.29%
+
+[2026-10-19 22:26:10] >> Recursos, amostra 5
+NAME               CPU %     MEM USAGE / LIMIT     MEM %
+grafana_tcc        1.65%     144.3MiB / 7.604GiB   1.85%
+postgres           0.01%     30.95MiB / 7.604GiB   0.40%
+mosquitto          0.07%     1.957MiB / 7.604GiB   0.03%
+subscriber         0.01%     4.078MiB / 7.604GiB   0.05%
+publisher_mqtt_c   0.00%     1.898MiB / 7.604GiB   0.02%
+pgadmin_tcc        0.05%     256.1MiB / 7.604GiB   3.29%
+
+[2026-10-19 22:36:11] >> Recursos, amostra 6
+NAME               CPU %     MEM USAGE / LIMIT     MEM %
+grafana_tcc        1.58%     143.5MiB / 7.604GiB   1.84%
+postgres           4.14%     26.5MiB / 7.604GiB    0.34%
+mosquitto          0.05%     2.688MiB / 7.604GiB   0.03%
+subscriber         0.00%     3.453MiB / 7.604GiB   0.04%
+publisher_mqtt_c   0.00%     2.148MiB / 7.604GiB   0.03%
+pgadmin_tcc        0.05%     256.2MiB / 7.604GiB   3.29%
+
+[2026-10-19 22:46:13] >> Recursos, amostra 7
+NAME               CPU %     MEM USAGE / LIMIT     MEM %
+grafana_tcc        2.44%     143.3MiB / 7.604GiB   1.84%
+postgres           0.00%     31.02MiB / 7.604GiB   0.40%
+mosquitto          0.06%     2.133MiB / 7.604GiB   0.03%
+subscriber         0.00%     3.742MiB / 7.604GiB   0.05%
+publisher_mqtt_c   0.00%     1.898MiB / 7.604GiB   0.02%
+pgadmin_tcc        0.05%     256.1MiB / 7.604GiB   3.29%
+
+[2026-10-19 22:56:14] >> Recursos, amostra 8
+NAME               CPU %     MEM USAGE / LIMIT     MEM %
+grafana_tcc        1.46%     143.5MiB / 7.604GiB   1.84%
+postgres           0.02%     31.31MiB / 7.604GiB   0.40%
+mosquitto          0.04%     2.176MiB / 7.604GiB   0.03%
+subscriber         0.01%     4.191MiB / 7.604GiB   0.05%
+publisher_mqtt_c   0.00%     1.898MiB / 7.604GiB   0.02%
+pgadmin_tcc        0.04%     256MiB / 7.604GiB     3.29%
+
+[2026-10-19 23:06:16] >> Recursos, amostra 9
+NAME               CPU %     MEM USAGE / LIMIT     MEM %
+grafana_tcc        1.92%     144.4MiB / 7.604GiB   1.85%
+postgres           0.13%     31.29MiB / 7.604GiB   0.40%
+mosquitto          0.08%     2.59MiB / 7.604GiB    0.03%
+subscriber         0.06%     3.258MiB / 7.604GiB   0.04%
+publisher_mqtt_c   0.03%     1.898MiB / 7.604GiB   0.02%
+pgadmin_tcc        0.05%     255.8MiB / 7.604GiB   3.28%
+
+[2026-10-19 23:16:18] >> Recursos, amostra 10
+NAME               CPU %     MEM USAGE / LIMIT     MEM %
+grafana_tcc        1.98%     143.8MiB / 7.604GiB   1.85%
+postgres           0.02%     31.73MiB / 7.604GiB   0.41%
+mosquitto          0.05%     2.02MiB / 7.604GiB    0.03%
+subscriber         0.00%     3.48MiB / 7.604GiB    0.04%
+publisher_mqtt_c   0.00%     2.148MiB / 7.604GiB   0.03%
+pgadmin_tcc        0.04%     255.8MiB / 7.604GiB   3.29%
+
+[2026-10-19 23:26:21] >> Recursos, amostra 11
+NAME               CPU %     MEM USAGE / LIMIT     MEM %
+grafana_tcc        1.92%     144.4MiB / 7.604GiB   1.85%
+postgres           0.00%     31.3MiB / 7.604GiB    0.40%
+mosquitto          0.06%     1.992MiB / 7.604GiB   0.03%
+subscriber         0.01%     3.332MiB / 7.604GiB   0.04%
+publisher_mqtt_c   0.00%     1.898MiB / 7.604GiB   0.02%
+pgadmin_tcc        0.03%     256.6MiB / 7.604GiB   3.29%
+
+[2026-10-19 23:36:23] >> Recursos, amostra 12
+NAME               CPU %     MEM USAGE / LIMIT     MEM %
+grafana_tcc        1.34%     143.7MiB / 7.604GiB   1.85%
+postgres           0.03%     31.64MiB / 7.604GiB   0.41%
+mosquitto          0.06%     1.82MiB / 7.604GiB    0.02%
+subscriber         0.01%     3.434MiB / 7.604GiB   0.04%
+publisher_mqtt_c   0.00%     2.145MiB / 7.604GiB   0.03%
+pgadmin_tcc        0.02%     256.4MiB / 7.604GiB   3.29%
+
+[2026-10-19 23:46:24] >> Recursos, amostra 13
+NAME               CPU %     MEM USAGE / LIMIT     MEM %
+grafana_tcc        1.89%     143.6MiB / 7.604GiB   1.84%
+postgres           0.00%     31.65MiB / 7.604GiB   0.41%
+mosquitto          0.07%     2.68MiB / 7.604GiB    0.03%
+subscriber         0.04%     3.004MiB / 7.604GiB   0.04%
+publisher_mqtt_c   0.00%     2.145MiB / 7.604GiB   0.03%
+pgadmin_tcc        0.05%     256MiB / 7.604GiB     3.29%
+
+[2026-10-19 23:56:26] >> Recursos, amostra 14
+NAME               CPU %     MEM USAGE / LIMIT     MEM %
+grafana_tcc        1.68%     143.7MiB / 7.604GiB   1.85%
+postgres           2.77%     36.01MiB / 7.604GiB   0.46%
+mosquitto          0.05%     2.168MiB / 7.604GiB   0.03%
+subscriber         0.00%     3.156MiB / 7.604GiB   0.04%
+publisher_mqtt_c   0.00%     1.898MiB / 7.604GiB   0.02%
+pgadmin_tcc        0.16%     255.8MiB / 7.604GiB   3.29%
+
+[2026-10-20 00:06:27] >> Recursos, amostra 15
+NAME               CPU %     MEM USAGE / LIMIT     MEM %
+grafana_tcc        1.35%     143.4MiB / 7.604GiB   1.84%
+postgres           0.00%     31.18MiB / 7.604GiB   0.40%
+mosquitto          0.05%     2.488MiB / 7.604GiB   0.03%
+subscriber         0.01%     3.965MiB / 7.604GiB   0.05%
+publisher_mqtt_c   0.00%     1.898MiB / 7.604GiB   0.02%
+pgadmin_tcc        0.04%     256.4MiB / 7.604GiB   3.29%
+
+[2026-10-20 00:16:30] >> Recursos, amostra 16
+NAME               CPU %     MEM USAGE / LIMIT     MEM %
+grafana_tcc        2.10%     144.2MiB / 7.604GiB   1.85%
+postgres           0.03%     31.44MiB / 7.604GiB   0.40%
+mosquitto          0.05%     1.785MiB / 7.604GiB   0.02%
+subscriber         0.01%     3.578MiB / 7.604GiB   0.05%
+publisher_mqtt_c   0.00%     1.898MiB / 7.604GiB   0.02%
+pgadmin_tcc        0.03%     256.3MiB / 7.604GiB   3.29%
+
+[2026-10-20 00:26:32] >> Recursos, amostra 17
+NAME               CPU %     MEM USAGE / LIMIT     MEM %
+grafana_tcc        1.81%     144MiB / 7.604GiB     1.85%
+postgres           0.17%     31.43MiB / 7.604GiB   0.40%
+mosquitto          0.09%     2.055MiB / 7.604GiB   0.03%
+subscriber         0.08%     3.441MiB / 7.604GiB   0.04%
+publisher_mqtt_c   0.04%     1.902MiB / 7.604GiB   0.02%
+pgadmin_tcc        0.05%     256.4MiB / 7.604GiB   3.29%
+
+[2026-10-20 00:36:34] >> Recursos, amostra 18
+NAME               CPU %     MEM USAGE / LIMIT     MEM %
+grafana_tcc        1.52%     144MiB / 7.604GiB     1.85%
+postgres           0.03%     31.47MiB / 7.604GiB   0.40%
+mosquitto          0.06%     2.199MiB / 7.604GiB   0.03%
+subscriber         0.01%     3.965MiB / 7.604GiB   0.05%
+publisher_mqtt_c   0.00%     1.898MiB / 7.604GiB   0.02%
+pgadmin_tcc        0.04%     256.1MiB / 7.604GiB   3.29%
+
+[2026-10-20 00:46:36] >> Recursos, amostra 19
+NAME               CPU %     MEM USAGE / LIMIT     MEM %
+grafana_tcc        1.53%     144.2MiB / 7.604GiB   1.85%
+postgres           0.00%     31.42MiB / 7.604GiB   0.40%
+mosquitto          0.05%     2.074MiB / 7.604GiB   0.03%
+subscriber         0.01%     3.539MiB / 7.604GiB   0.05%
+publisher_mqtt_c   0.00%     1.898MiB / 7.604GiB   0.02%
+pgadmin_tcc        0.05%     256.1MiB / 7.604GiB   3.29%
+
+[2026-10-20 00:56:38] >> Recursos, amostra 20
+NAME               CPU %     MEM USAGE / LIMIT     MEM %
+grafana_tcc        1.65%     144.4MiB / 7.604GiB   1.85%
+postgres           0.04%     31.64MiB / 7.604GiB   0.41%
+mosquitto          0.08%     2.016MiB / 7.604GiB   0.03%
+subscriber         0.01%     3.445MiB / 7.604GiB   0.04%
+publisher_mqtt_c   0.00%     1.652MiB / 7.604GiB   0.02%
+pgadmin_tcc        0.04%     256.4MiB / 7.604GiB   3.29%
+
+[2026-10-20 01:06:39] >> Recursos, amostra 21
+NAME               CPU %     MEM USAGE / LIMIT     MEM %
+grafana_tcc        1.55%     144.1MiB / 7.604GiB   1.85%
+postgres           3.29%     31.7MiB / 7.604GiB    0.41%
+mosquitto          0.10%     2.066MiB / 7.604GiB   0.03%
+subscriber         0.01%     3.984MiB / 7.604GiB   0.05%
+publisher_mqtt_c   0.00%     1.898MiB / 7.604GiB   0.02%
+pgadmin_tcc        0.04%     257.1MiB / 7.604GiB   3.30%
+
+[2026-10-20 01:16:41] >> Recursos, amostra 22
+NAME               CPU %     MEM USAGE / LIMIT     MEM %
+grafana_tcc        1.52%     144.3MiB / 7.604GiB   1.85%
+postgres           0.02%     31.46MiB / 7.604GiB   0.40%
+mosquitto          0.06%     1.953MiB / 7.604GiB   0.03%
+subscriber         0.01%     4.098MiB / 7.604GiB   0.05%
+publisher_mqtt_c   0.00%     1.898MiB / 7.604GiB   0.02%
+pgadmin_tcc        0.06%     256.4MiB / 7.604GiB   3.29%
+
+[2026-10-20 01:26:43] >> Recursos, amostra 23
+NAME               CPU %     MEM USAGE / LIMIT     MEM %
+grafana_tcc        2.88%     144MiB / 7.604GiB     1.85%
+postgres           0.05%     31.62MiB / 7.604GiB   0.41%
+mosquitto          0.07%     2.023MiB / 7.604GiB   0.03%
+subscriber         0.12%     3.621MiB / 7.604GiB   0.05%
+publisher_mqtt_c   0.00%     1.898MiB / 7.604GiB   0.02%
+pgadmin_tcc        0.04%     255.5MiB / 7.604GiB   3.28%
+
+[2026-10-20 01:36:45] >> Recursos, amostra 24
+NAME               CPU %     MEM USAGE / LIMIT     MEM %
+grafana_tcc        1.89%     143.3MiB / 7.604GiB   1.84%
+postgres           0.02%     26.02MiB / 7.604GiB   0.33%
+mosquitto          0.11%     1.961MiB / 7.604GiB   0.03%
+subscriber         0.03%     3.176MiB / 7.604GiB   0.04%
+publisher_mqtt_c   0.00%     1.898MiB / 7.604GiB   0.02%
+pgadmin_tcc        0.05%     256MiB / 7.604GiB     3.29%
+
+[2026-10-20 01:46:47] >> Recursos, amostra 25
+NAME               CPU %     MEM USAGE / LIMIT     MEM %
+grafana_tcc        1.91%     145.3MiB / 7.604GiB   1.87%
+postgres           0.03%     30.43MiB / 7.604GiB   0.39%
+mosquitto          0.06%     2.086MiB / 7.604GiB   0.03%
+subscriber         0.00%     3.281MiB / 7.604GiB   0.04%
+publisher_mqtt_c   0.04%     1.898MiB / 7.604GiB   0.02%
+pgadmin_tcc        0.05%     255.8MiB / 7.604GiB   3.28%
+
+[2026-10-20 01:56:49] >> Recursos, amostra 26
+NAME               CPU %     MEM USAGE / LIMIT     MEM %
+grafana_tcc        1.57%     145.7MiB / 7.604GiB   1.87%
+postgres           0.00%     31.11MiB / 7.604GiB   0.40%
+mosquitto          0.07%     2.375MiB / 7.604GiB   0.03%
+subscriber         0.01%     3.672MiB / 7.604GiB   0.05%
+publisher_mqtt_c   0.00%     2.145MiB / 7.604GiB   0.03%
+pgadmin_tcc        0.04%     255.7MiB / 7.604GiB   3.28%
+
+[2026-10-20 02:06:51] >> Recursos, amostra 27
+NAME               CPU %     MEM USAGE / LIMIT     MEM %
+grafana_tcc        1.71%     145.5MiB / 7.604GiB   1.87%
+postgres           3.08%     31.1MiB / 7.604GiB    0.40%
+mosquitto          0.06%     2.445MiB / 7.604GiB   0.03%
+subscriber         0.01%     4.227MiB / 7.604GiB   0.05%
+publisher_mqtt_c   0.00%     1.898MiB / 7.604GiB   0.02%
+pgadmin_tcc        0.03%     255.9MiB / 7.604GiB   3.29%
+
+[2026-10-20 02:16:52] >> Recursos, amostra 28
+NAME               CPU %     MEM USAGE / LIMIT     MEM %
+grafana_tcc        1.77%     146.1MiB / 7.604GiB   1.88%
+postgres           0.00%     31.49MiB / 7.604GiB   0.40%
+mosquitto          0.05%     2.5MiB / 7.604GiB     0.03%
+subscriber         0.01%     3.816MiB / 7.604GiB   0.05%
+publisher_mqtt_c   0.00%     2.145MiB / 7.604GiB   0.03%
+pgadmin_tcc        0.06%     255.7MiB / 7.604GiB   3.28%
+
+[2026-10-20 02:26:54] >> Recursos, amostra 29
+NAME               CPU %     MEM USAGE / LIMIT     MEM %
+grafana_tcc        1.85%     145.5MiB / 7.604GiB   1.87%
+postgres           0.03%     30.29MiB / 7.604GiB   0.39%
+mosquitto          0.06%     2.277MiB / 7.604GiB   0.03%
+subscriber         0.01%     3.957MiB / 7.604GiB   0.05%
+publisher_mqtt_c   0.00%     1.898MiB / 7.604GiB   0.02%
+pgadmin_tcc        0.04%     256.1MiB / 7.604GiB   3.29%
+
+[2026-10-20 02:36:56] >> Recursos, amostra 30
+NAME               CPU %     MEM USAGE / LIMIT     MEM %
+grafana_tcc        1.50%     145.8MiB / 7.604GiB   1.87%
+postgres           0.00%     31.17MiB / 7.604GiB   0.40%
+mosquitto          0.08%     2.387MiB / 7.604GiB   0.03%
+subscriber         0.01%     3.484MiB / 7.604GiB   0.04%
+publisher_mqtt_c   0.00%     1.652MiB / 7.604GiB   0.02%
+pgadmin_tcc        0.18%     255.8MiB / 7.604GiB   3.29%
+
+[2026-10-20 02:46:58] >> Recursos, amostra 31
+NAME               CPU %     MEM USAGE / LIMIT     MEM %
+grafana_tcc        1.69%     145.9MiB / 7.604GiB   1.87%
+postgres           0.02%     31.85MiB / 7.604GiB   0.41%
+mosquitto          0.06%     2.18MiB / 7.604GiB    0.03%
+subscriber         0.00%     4.043MiB / 7.604GiB   0.05%
+publisher_mqtt_c   0.00%     2.148MiB / 7.604GiB   0.03%
+pgadmin_tcc        0.07%     256MiB / 7.604GiB     3.29%
+
+[2026-10-20 02:57:00] >> Recursos, amostra 32
+NAME               CPU %     MEM USAGE / LIMIT     MEM %
+grafana_tcc        2.27%     145.6MiB / 7.604GiB   1.87%
+postgres           2.63%     26.39MiB / 7.604GiB   0.34%
+mosquitto          0.07%     2.242MiB / 7.604GiB   0.03%
+subscriber         0.01%     3.746MiB / 7.604GiB   0.05%
+publisher_mqtt_c   0.00%     1.898MiB / 7.604GiB   0.02%
+pgadmin_tcc        0.03%     255.5MiB / 7.604GiB   3.28%
+
+[2026-10-20 03:07:03] >> Recursos, amostra 33
+NAME               CPU %     MEM USAGE / LIMIT     MEM %
+grafana_tcc        1.61%     145.7MiB / 7.604GiB   1.87%
+postgres           0.02%     31.38MiB / 7.604GiB   0.40%
+mosquitto          0.04%     2.168MiB / 7.604GiB   0.03%
+subscriber         0.00%     3.23MiB / 7.604GiB    0.04%
+publisher_mqtt_c   0.00%     2.148MiB / 7.604GiB   0.03%
+pgadmin_tcc        0.02%     256.3MiB / 7.604GiB   3.29%
+
+[2026-10-20 03:17:04] >> Recursos, amostra 34
+NAME               CPU %     MEM USAGE / LIMIT     MEM %
+grafana_tcc        1.46%     145.5MiB / 7.604GiB   1.87%
+postgres           3.04%     31.57MiB / 7.604GiB   0.41%
+mosquitto          0.08%     2.637MiB / 7.604GiB   0.03%
+subscriber         0.03%     3.723MiB / 7.604GiB   0.05%
+publisher_mqtt_c   0.00%     1.898MiB / 7.604GiB   0.02%
+pgadmin_tcc        0.07%     255.6MiB / 7.604GiB   3.28%
+
+[2026-10-20 03:27:06] >> Recursos, amostra 35
+NAME               CPU %     MEM USAGE / LIMIT     MEM %
+grafana_tcc        1.61%     146.2MiB / 7.604GiB   1.88%
+postgres           0.03%     31.97MiB / 7.604GiB   0.41%
+mosquitto          0.06%     2.75MiB / 7.604GiB    0.04%
+subscriber         0.01%     3.598MiB / 7.604GiB   0.05%
+publisher_mqtt_c   0.00%     1.898MiB / 7.604GiB   0.02%
+pgadmin_tcc        0.02%     256MiB / 7.604GiB     3.29%
+
+[2026-10-20 03:37:07] >> Recursos, amostra 36
+NAME               CPU %     MEM USAGE / LIMIT     MEM %
+grafana_tcc        1.59%     145.9MiB / 7.604GiB   1.87%
+postgres           0.00%     31.32MiB / 7.604GiB   0.40%
+mosquitto          0.07%     2.504MiB / 7.604GiB   0.03%
+subscriber         0.01%     3.473MiB / 7.604GiB   0.04%
+publisher_mqtt_c   0.00%     1.902MiB / 7.604GiB   0.02%
+pgadmin_tcc        0.04%     255.9MiB / 7.604GiB   3.29%
+
+[2026-10-20 03:47:09] >> Recursos, amostra 37
+NAME               CPU %     MEM USAGE / LIMIT     MEM %
+grafana_tcc        1.28%     146.6MiB / 7.604GiB   1.88%
+postgres           0.03%     31.75MiB / 7.604GiB   0.41%
+mosquitto          0.07%     2.23MiB / 7.604GiB    0.03%
+subscriber         0.00%     3.762MiB / 7.604GiB   0.05%
+publisher_mqtt_c   0.00%     1.895MiB / 7.604GiB   0.02%
+pgadmin_tcc        0.03%     255.4MiB / 7.604GiB   3.28%
+
+[2026-10-20 03:57:12] >> Recursos, amostra 38
+NAME               CPU %     MEM USAGE / LIMIT     MEM %
+grafana_tcc        1.90%     145.9MiB / 7.604GiB   1.87%
+postgres           0.18%     31.78MiB / 7.604GiB   0.41%
+mosquitto          0.07%     2.66MiB / 7.604GiB    0.03%
+subscriber         0.07%     3.621MiB / 7.604GiB   0.05%
+publisher_mqtt_c   0.05%     1.898MiB / 7.604GiB   0.02%
+pgadmin_tcc        0.03%     255.2MiB / 7.604GiB   3.28%
+
+[2026-10-20 04:07:14] >> Recursos, amostra 39
+NAME               CPU %     MEM USAGE / LIMIT     MEM %
+grafana_tcc        1.84%     146MiB / 7.604GiB     1.88%
+postgres           0.03%     31.96MiB / 7.604GiB   0.41%
+mosquitto          0.06%     2.453MiB / 7.604GiB   0.03%
+subscriber         0.02%     3.91MiB / 7.604GiB    0.05%
+publisher_mqtt_c   0.00%     1.902MiB / 7.604GiB   0.02%
+pgadmin_tcc        0.05%     255.2MiB / 7.604GiB   3.28%
+
+[2026-10-20 04:17:16] >> Recursos, amostra 40
+NAME               CPU %     MEM USAGE / LIMIT     MEM %
+grafana_tcc        1.44%     146MiB / 7.604GiB     1.88%
+postgres           3.06%     31.91MiB / 7.604GiB   0.41%
+mosquitto          0.05%     2.695MiB / 7.604GiB   0.03%
+subscriber         0.00%     3.598MiB / 7.604GiB   0.05%
+publisher_mqtt_c   0.00%     1.656MiB / 7.604GiB   0.02%
+pgadmin_tcc        0.03%     255.3MiB / 7.604GiB   3.28%
+
+[2026-10-20 04:27:18] >> Recursos, amostra 41
+NAME               CPU %     MEM USAGE / LIMIT     MEM %
+grafana_tcc        1.56%     145.8MiB / 7.604GiB   1.87%
+postgres           3.08%     31.98MiB / 7.604GiB   0.41%
+mosquitto          0.06%     2.488MiB / 7.604GiB   0.03%
+subscriber         0.01%     3.414MiB / 7.604GiB   0.04%
+publisher_mqtt_c   0.00%     1.902MiB / 7.604GiB   0.02%
+pgadmin_tcc        0.04%     256.8MiB / 7.604GiB   3.30%
+
+[2026-10-20 04:37:19] >> Recursos, amostra 42
+NAME               CPU %     MEM USAGE / LIMIT     MEM %
+grafana_tcc        1.93%     145.8MiB / 7.604GiB   1.87%
+postgres           0.00%     30.98MiB / 7.604GiB   0.40%
+mosquitto          0.07%     2.238MiB / 7.604GiB   0.03%
+subscriber         0.01%     3.344MiB / 7.604GiB   0.04%
+publisher_mqtt_c   0.00%     1.66MiB / 7.604GiB    0.02%
+pgadmin_tcc        0.04%     255.9MiB / 7.604GiB   3.29%
+
+[2026-10-20 04:47:21] >> Recursos, amostra 43
+NAME               CPU %     MEM USAGE / LIMIT     MEM %
+grafana_tcc        1.86%     146.8MiB / 7.604GiB   1.89%
+postgres           0.04%     31.79MiB / 7.604GiB   0.41%
+mosquitto          0.05%     2.977MiB / 7.604GiB   0.04%
+subscriber         0.01%     3.422MiB / 7.604GiB   0.04%
+publisher_mqtt_c   0.00%     1.898MiB / 7.604GiB   0.02%
+pgadmin_tcc        0.04%     255.4MiB / 7.604GiB   3.28%
+
+[2026-10-20 04:57:23] >> Recursos, amostra 44
+NAME               CPU %     MEM USAGE / LIMIT     MEM %
+grafana_tcc        1.56%     145.7MiB / 7.604GiB   1.87%
+postgres           0.00%     32.2MiB / 7.604GiB    0.41%
+mosquitto          0.06%     2.219MiB / 7.604GiB   0.03%
+subscriber         0.01%     3.867MiB / 7.604GiB   0.05%
+publisher_mqtt_c   0.00%     1.898MiB / 7.604GiB   0.02%
+pgadmin_tcc        0.03%     256.4MiB / 7.604GiB   3.29%
+
+[2026-10-20 05:07:25] >> Recursos, amostra 45
+NAME               CPU %     MEM USAGE / LIMIT     MEM %
+grafana_tcc        1.68%     145.9MiB / 7.604GiB   1.87%
+postgres           0.03%     32.21MiB / 7.604GiB   0.41%
+mosquitto          0.06%     2.16MiB / 7.604GiB    0.03%
+subscriber         0.02%     3.648MiB / 7.604GiB   0.05%
+publisher_mqtt_c   0.00%     1.898MiB / 7.604GiB   0.02%
+pgadmin_tcc        0.04%     256.3MiB / 7.604GiB   3.29%
+
+[2026-10-20 05:17:27] >> Recursos, amostra 46
+NAME               CPU %     MEM USAGE / LIMIT     MEM %
+grafana_tcc        1.94%     146.5MiB / 7.604GiB   1.88%
+postgres           0.16%     31.71MiB / 7.604GiB   0.41%
+mosquitto          0.08%     2.305MiB / 7.604GiB   0.03%
+subscriber         0.05%     3.797MiB / 7.604GiB   0.05%
+publisher_mqtt_c   0.03%     1.898MiB / 7.604GiB   0.02%
+pgadmin_tcc        0.08%     256MiB / 7.604GiB     3.29%
+
+[2026-10-20 05:27:29] >> Recursos, amostra 47
+NAME               CPU %     MEM USAGE / LIMIT     MEM %
+grafana_tcc        1.76%     146.1MiB / 7.604GiB   1.88%
+postgres           0.00%     31.62MiB / 7.604GiB   0.41%
+mosquitto          0.07%     2.055MiB / 7.604GiB   0.03%
+subscriber         0.01%     4.027MiB / 7.604GiB   0.05%
+publisher_mqtt_c   0.00%     2.145MiB / 7.604GiB   0.03%
+pgadmin_tcc        0.05%     256.2MiB / 7.604GiB   3.29%
+
+[2026-10-20 05:37:31] >> Recursos, amostra 48
+NAME               CPU %     MEM USAGE / LIMIT     MEM %
+grafana_tcc        1.72%     146.1MiB / 7.604GiB   1.88%
+postgres           0.02%     31.56MiB / 7.604GiB   0.41%
+mosquitto          0.05%     2.555MiB / 7.604GiB   0.03%
+subscriber         0.00%     3.906MiB / 7.604GiB   0.05%
+publisher_mqtt_c   0.00%     1.895MiB / 7.604GiB   0.02%
+pgadmin_tcc        0.03%     256.7MiB / 7.604GiB   3.30%
+
+[2026-10-20 05:46:00] Fim da janela, instante 1792485960
+[2026-10-20 05:46:01] >> Recursos, amostra final
+NAME               CPU %     MEM USAGE / LIMIT     MEM %
+grafana_tcc        2.08%     146.2MiB / 7.604GiB   1.88%
+postgres           3.28%     31.64MiB / 7.604GiB   0.41%
+mosquitto          0.11%     2.895MiB / 7.604GiB   0.04%
+subscriber         0.08%     3.469MiB / 7.604GiB   0.04%
+publisher_mqtt_c   0.04%     1.652MiB / 7.604GiB   0.02%
+pgadmin_tcc        0.03%     256.6MiB / 7.604GiB   3.29%
+
+[2026-10-20 05:46:01] >> Resultado da execucao longa
+ leituras | esperadas | percentual | menor_intervalo_s | maior_intervalo_s | intervalos_acima_10s | intervalos_diferentes_de_5s 
+----------+-----------+------------+-------------------+-------------------+----------------------+-----------------------------
+     5760 |      5761 |      99.98 |                 5 |                 5 |                    0 |                           0
+(1 row)
+
+
+[2026-10-20 05:46:02] >> Intervalos fora de 5 s (se houver)
+ depois_de | intervalo_s 
+-----------+-------------
+(0 rows)
+
+
+[2026-10-20 05:46:02] >> Tamanho do banco no fim
+  banco  | tabela_caldeira | linhas 
+---------+-----------------+--------
+ 9415 kB | 1448 kB         |  19127
+(1 row)
+
+
+[2026-10-20 05:46:02] >> Log do subscriber (ultimas 20 linhas)
+subscriber  | NOTICE:  column "vazao_caldeira" of relation "caldeira" already exists, skipping
+subscriber  | NOTICE:  column "press_vapor" of relation "caldeira" already exists, skipping
+subscriber  | 1792485951: caldeira = 12936
+subscriber  | NOTICE:  relation "caldeira" already exists, skipping
+subscriber  | NOTICE:  column "temp_fornalha" of relation "caldeira" already exists, skipping
+subscriber  | NOTICE:  column "press_fornalha" of relation "caldeira" already exists, skipping
+subscriber  | NOTICE:  column "vazao_caldeira" of relation "caldeira" already exists, skipping
+subscriber  | NOTICE:  column "press_vapor" of relation "caldeira" already exists, skipping
+subscriber  | 1792485956: caldeira = 13449
+subscriber  | NOTICE:  relation "caldeira" already exists, skipping
+subscriber  | NOTICE:  column "temp_fornalha" of relation "caldeira" already exists, skipping
+subscriber  | NOTICE:  column "press_fornalha" of relation "caldeira" already exists, skipping
+subscriber  | NOTICE:  column "vazao_caldeira" of relation "caldeira" already exists, skipping
+subscriber  | NOTICE:  column "press_vapor" of relation "caldeira" already exists, skipping
+subscriber  | 1792485961: caldeira = 13285
+subscriber  | NOTICE:  relation "caldeira" already exists, skipping
+subscriber  | NOTICE:  column "temp_fornalha" of relation "caldeira" already exists, skipping
+subscriber  | NOTICE:  column "press_fornalha" of relation "caldeira" already exists, skipping
+subscriber  | NOTICE:  column "vazao_caldeira" of relation "caldeira" already exists, skipping
+subscriber  | NOTICE:  column "press_vapor" of relation "caldeira" already exists, skipping
+
+[2026-10-20 05:46:02] FIM DA A2

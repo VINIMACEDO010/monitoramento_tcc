@@ -1,0 +1,14 @@
+[2026-10-19 18:33:38] subscriber iniciado
+[2026-10-19 18:33:41] publisher_mqtt iniciado
+[2026-10-19 18:37:41] publisher_mqtt parado
+[2026-10-19 18:37:41] publisher_modbus iniciado
+[2026-10-19 18:39:41] publisher_modbus parado
+[2026-10-19 18:39:41] envios de teste: duplicado, planta nova, nome invalido
+[2026-10-19 18:39:43] publisher_mqtt reiniciado
+[2026-10-19 18:40:13] queda do broker por 15 s
+[2026-10-19 18:40:28] broker de volta
+[2026-10-19 18:41:28] queda do banco por 15 s
+[2026-10-19 18:41:43] banco de volta
+[2026-10-19 18:43:43] encerrando
+[2026-10-19 18:43:43] subscriber saiu com codigo 0
+[2026-10-19 18:43:43] FIM

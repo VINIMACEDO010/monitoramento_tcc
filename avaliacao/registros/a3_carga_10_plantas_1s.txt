@@ -1,0 +1,16 @@
+cenario s1: 10 plantas, intervalo 1000 ms, duracao 600 s, inicio 1792435533 (2026-10-19 18:45:33)
+enviadas=6000 confirmadas_pelo_broker=6000
+fim 1792436141
+ leituras_gravadas | plantas | atraso_medio_s | atraso_max_s | atraso_p95_s 
+-------------------+---------+----------------+--------------+--------------
+              6000 |      10 |          0.588 |        0.688 |        0.595
+(1 row)
+
+ min_por_planta | max_por_planta 
+----------------+----------------
+            600 |            600
+(1 row)
+
+recursos do subscriber (cpu% e memoria RSS em kB, a cada 10 s):
+  amostras=61 cpu_media=0.2% rss_inicial=10304 kB rss_max=10308 kB
+mensagens de erro no subscriber: 0

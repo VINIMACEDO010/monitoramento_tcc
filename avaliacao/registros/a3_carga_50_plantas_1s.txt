@@ -1,0 +1,16 @@
+cenario s3: 50 plantas, intervalo 1000 ms, duracao 300 s, inicio 1792436311 (2026-10-19 18:58:31)
+enviadas=15000 confirmadas_pelo_broker=15000
+fim 1792436619
+ leituras_gravadas | plantas | atraso_medio_s | atraso_max_s | atraso_p95_s 
+-------------------+---------+----------------+--------------+--------------
+             15000 |      50 |          0.545 |        0.612 |        0.576
+(1 row)
+
+ min_por_planta | max_por_planta 
+----------------+----------------
+            300 |            300
+(1 row)
+
+recursos do subscriber (cpu% e memoria RSS em kB, a cada 10 s):
+  amostras=31 cpu_media=0.8% rss_inicial=10212 kB rss_max=10212 kB
+mensagens de erro no subscriber: 0
